@@ -14,12 +14,29 @@
  * ranking badge. Ordering is src/directory/search.js's algorithm and is never a
  * viewer preference — there is no drag-to-reorder here or anywhere (F-13).
  *
+ * TWO PRESENTATIONS, ONE RESULT SET. A view switcher between the count line and
+ * the results offers List (the default) and Cards. It changes how the results
+ * are DRAWN and nothing else: the same array search.js returned, in the order it
+ * returned it, every element of it, in both views. It is not a sort control, not
+ * a density control that hides anything, and not a second query — switching does
+ * not re-run the search, it repaints the set already in hand, which is also why
+ * it can never quietly change what the count line above it is counting. A card
+ * without a media plate is drawn exactly like one with it, minus the photo: no
+ * dimming, no "add a photo" prompt, no completion treatment of any kind (F-14).
+ *
+ * THE VIEW DOES NOT PERSIST. Every mount arrives in List, for the same reason
+ * mount resets the query and the selection: #/ is an arrival, and an arrival that
+ * silently reapplied a presentation chosen three navigations ago would be
+ * answering a question this viewer has not asked yet.
+ *
  * ARRIVAL (SPEC § 3.4.1 M7). An empty query lists every record in name order and
- * the count line reads "18 people". That is not the wall F-8 forbids — nothing
- * is ranked, nothing scrolls forever, and an empty first screen would read as
- * broken. Mount resets the query and the selection for the same reason: #/ is an
- * arrival, and an arrival that silently reapplied a filter from three
- * navigations ago would be lying about what the count means.
+ * the count line states how many, counted from the live result set this render
+ * produced rather than from any figure written here — the roster is data, and a
+ * literal in a comment goes stale the first time a record lands. That is not the
+ * wall F-8 forbids — nothing is ranked, nothing scrolls forever, and an empty
+ * first screen would read as broken. Mount resets the query and the selection
+ * for the same reason: #/ is an arrival, and an arrival that silently reapplied
+ * a filter from three navigations ago would be lying about what the count means.
  *
  * WHAT THIS FILE MAY AND MAY NOT READ. All matching and all ordering happen in
  * search.js, which never reads a media field — that is the legal constraint
@@ -37,8 +54,8 @@
  *
  * NO SCHEDULER (SPEC A1-22). The search runs synchronously on every input event.
  * There is no debounce, because this build carries no scheduler of any kind and
- * AM-4 greps this folder for one; the corpus is eighteen records and the whole
- * pass is a few hundred string comparisons.
+ * AM-4 greps this folder for one; the corpus is a dozen-odd records and the
+ * whole pass is a few hundred string comparisons.
  *
  * THE ONE LIVE REGION IS THE APP'S. app.html carries a single aria-live region
  * (SPEC § 4 D2) and the router announces surface titles in it. This surface adds
@@ -77,6 +94,16 @@
   var facetsOpen = false;
   var selected = [];
   var query = "";
+
+  /* The presentation, and the set it is a presentation OF. "list" is the default
+     at every mount (see the header). lastResults holds what search.js last
+     returned, so pressing a view button repaints that array instead of asking
+     the same question again — the switcher is a drawing choice, and re-running
+     the search to answer it would make the view look like an input to the
+     result. */
+  var view = "list";
+  var lastResults = [];
+  var viewNodes = [];
 
   /* --- small helpers -------------------------------------------------------- */
 
@@ -153,11 +180,11 @@
      monogram; a record that does not shows the monogram alone. The monogram is
      always on top, so two records that happen to name the same placeholder file
      are never told apart by the photo (plans/AUDIT-app-surfaces.md L6 — six
-     images across eighteen records, a known residual queued to Ben).
+     images shared across the whole roster, a known residual queued to Ben).
 
      The plate is aria-hidden and its image alt is empty on purpose: the open
      control carries the person's name in its own label, and announcing a
-     placeholder photo eighteen times would bury it. */
+     placeholder photo once per record would bury it. */
   function plate(record) {
     var identity = record.identity || {};
     var artifact = (record.outcome || {}).artifact || {};
@@ -311,13 +338,86 @@
     return item;
   }
 
+  /* --- the grid card -------------------------------------------------------- */
+
+  /* The SAME record, drawn as a portfolio tile. It reads plate-or-monogram
+     through plate() above and not through a second media-reading path, so the
+     one place that decides whether a record shows a photograph stays one place
+     and search.js still never sees a media field (AM-12).
+
+     The control is a real <button> filling the card body, exactly as .dir-open
+     fills a list row, so Enter and Space are the element's own activation and
+     nothing here imitates a button with a role. The credential chip sits below
+     it, outside the button, because an interactive element inside another one is
+     what that split exists to avoid (directory.css:185-187). */
+  function gridCard(result) {
+    var record = result.record;
+    var identity = record.identity || {};
+    var availability = str(identity.availability).replace(/^\s+|\s+$/g, "");
+    var item = make("li", "dir-gcard");
+    var open = button("dir-gcard-open");
+    var lines = make("span", "dir-gcard-lines");
+    var pinned;
+    var chip;
+    var foot;
+
+    item.setAttribute("data-dir-grid-card", "");
+
+    open.setAttribute("data-dir-open", str(record.id));
+    open.setAttribute("aria-label", "Open " + str(identity.name) + "'s reel");
+    open.appendChild(plate(record));
+
+    lines.appendChild(make("span", "dir-name", str(identity.name)));
+    /* The positioning line as the record wrote it, same as the list row: never a
+       job title this surface derived. */
+    lines.appendChild(make("span", "dir-niche", str(identity.niche)));
+
+    /* Only when the record has said something. A record that has not is not
+       marked as having failed to — there is no completion score here (F-14),
+       and "stated / not stated" is already the availability facet's own test
+       (search.js:150-152). */
+    if (availability) {
+      lines.appendChild(make("span", "dir-gcard-avail", availability));
+    }
+
+    open.appendChild(lines);
+
+    /* The identical navigation the list row binds, in the same bucket: these
+       nodes are thrown away on the next repaint and their listeners go with
+       them. */
+    bind(resultListeners, open, "click", function () {
+      LENZLI.router.go("/r/" + record.id);
+    });
+
+    item.appendChild(open);
+
+    /* The leading credential, through the same two engine calls the list row
+       makes. pinOrder filters tier D out and renderChip returns null for it, so
+       only a truthy return is appended and a record whose only credential is
+       self-reported simply carries no chip. */
+    pinned = typeof LENZLI.pinOrder === "function"
+      ? LENZLI.pinOrder(record.credentials || [])[0]
+      : null;
+    chip = pinned && typeof LENZLI.renderChip === "function"
+      ? LENZLI.renderChip(pinned)
+      : null;
+
+    if (chip) {
+      foot = make("div", "dir-gcard-foot");
+      foot.appendChild(chip);
+      item.appendChild(foot);
+    }
+
+    return item;
+  }
+
   /* --- the empty state ------------------------------------------------------ */
 
   /* It suggests broadening and names the ONE facet whose removal would bring
      results back; it never offers "show everyone", which would teach the viewer
      that the filter was decorative (SPEC § 4 D5). The candidate is found by
-     re-running the search without each selected facet in turn — eighteen
-     records, so the honest answer is cheaper than a heuristic.
+     re-running the search without each selected facet in turn — a corpus
+     this small, so the honest answer is cheaper than a heuristic.
 
      Two facets can bring back the same number, and the tiebreak is the LAST one
      selected: an empty screen appears the moment a filter is added, so the one
@@ -406,28 +506,45 @@
 
   /* --- rendering ------------------------------------------------------------ */
 
-  /* Only the count line and the result list are rebuilt. The query box and the
-     facet controls are built once at mount and mutated in place, because
-     replacing the input the viewer is typing into would take the caret with it
-     — and there is no scheduler to put it back (A1-22). */
-  function render() {
-    var results = LENZLI.directory.search(query, selected, records());
-    var list;
+  /* PAINT DRAWS, RENDER ASKS. paint() turns lastResults into nodes and is the
+     only thing a view switch runs; render() is the one that puts the question to
+     search.js and then paints the answer. Split that way, pressing List or Cards
+     cannot change the result set or the count above it — it has no path to
+     either (F-8).
+
+     The order is search.js's, forEach'd start to end: every result is drawn, in
+     both views, with no slice, no page and no promoted first tile. */
+  function paint() {
+    var wrap;
 
     resultListeners = release(resultListeners);
-    countLine.textContent = countText(results.length);
     resultsBox.textContent = "";
 
-    if (!results.length) {
+    if (!lastResults.length) {
+      /* Not a presentation of results but the absence of them, so it is the same
+         block in either view. */
       resultsBox.appendChild(emptyState());
       return;
     }
 
-    list = make("ol", "dir-results");
-    results.forEach(function (result) {
-      list.appendChild(card(result));
+    wrap = view === "cards"
+      ? make("ul", "dir-cards")
+      : make("ol", "dir-results");
+
+    lastResults.forEach(function (result) {
+      wrap.appendChild(view === "cards" ? gridCard(result) : card(result));
     });
-    resultsBox.appendChild(list);
+    resultsBox.appendChild(wrap);
+  }
+
+  /* Only the count line and the result list are rebuilt. The query box, the
+     facet controls and the view switcher are built once at mount and mutated in
+     place, because replacing the input the viewer is typing into would take the
+     caret with it — and there is no scheduler to put it back (A1-22). */
+  function render() {
+    lastResults = LENZLI.directory.search(query, selected, records());
+    countLine.textContent = countText(lastResults.length);
+    paint();
   }
 
   function isSelected(facet) {
@@ -462,12 +579,12 @@
   };
 
   /* The panel is COLLAPSED ON ARRIVAL, behind one real button that says how many
-     filters are applied. Measured, on this corpus: eighteen niche facets, two
-     availability facets and twenty-three verification facets is forty-three
-     controls, and § 10's 44px minimum makes them fill the whole first screen —
+     filters are applied. On this corpus the niche, availability and
+     verification facets together are several dozen controls, and § 10's 44px
+     minimum makes them fill the whole first screen —
      so with the panel open, arriving at #/ shows a wall of filters and not one
-     person. § 3.4.1 M7 is explicit that the arrival screen is the eighteen
-     people and the count line, and that a first screen which fails to show them
+     person. § 3.4.1 M7 is explicit that the arrival screen is the full roster
+     and the count line, and that a first screen which fails to show them
      "would read as broken". Nothing is removed: every facet is one press away,
      the button carries the applied count so a filtered result can never look
      unexplained, and the panel stays open once it is opened. */
@@ -550,6 +667,60 @@
     return panel;
   }
 
+  /* --- the view switcher ---------------------------------------------------- */
+
+  /* Two options and no third. A "compact" or "dense" variant would be a third
+     thing to explain and the second one is already the whole idea: the same
+     people, read as a line or read as a wall of work. */
+  var VIEWS = [
+    { id: "list", label: "List" },
+    { id: "cards", label: "Cards" }
+  ];
+
+  /* aria-pressed is the state, on both buttons, always — the facets' own
+     encoding (§ 10) and the one directory.css already styles from. Neither
+     button is ever disabled: a disabled control is unreachable from the
+     keyboard, and "you are already here" is what pressed MEANS. */
+  function syncView() {
+    viewNodes.forEach(function (entry) {
+      entry.node.setAttribute("aria-pressed", entry.id === view ? "true" : "false");
+    });
+  }
+
+  /* Built once, at mount, and never rebuilt: it is chrome, not a result, so its
+     listeners belong to chromeListeners and it survives every repaint. That is
+     also what keeps focus honest — the button the viewer just pressed is still
+     the same node afterwards, so focus stays on it with nothing here having to
+     put it back. */
+  function viewSwitcher() {
+    var group = make("div", "dir-view");
+
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", "Result view");
+    group.setAttribute("data-dir-view", "");
+
+    VIEWS.forEach(function (option) {
+      var control = button("dir-view-btn", option.label);
+
+      control.setAttribute("data-dir-view-option", option.id);
+      bind(chromeListeners, control, "click", function () {
+        /* Pressing the view already on screen is not a change; repainting for it
+           would throw away and rebuild every result node for nothing. */
+        if (view === option.id) {
+          return;
+        }
+        view = option.id;
+        syncView();
+        paint();
+      });
+
+      viewNodes.push({ node: control, id: option.id });
+      group.appendChild(control);
+    });
+
+    return group;
+  }
+
   function queryBlock() {
     var block = make("div", "dir-query-block");
     var label = make("label", "dir-label", "Search");
@@ -595,6 +766,11 @@
       selected = [];
       facetNodes = [];
       facetsOpen = false;
+      /* List on every arrival, and the cache empty until the first render: the
+         view is reset with the query and the selection, for the same reason. */
+      view = "list";
+      viewNodes = [];
+      lastResults = [];
       facetList = LENZLI.directory.facets(records());
 
       heading.setAttribute("tabindex", "-1");
@@ -618,6 +794,11 @@
       countLine.setAttribute("tabindex", "-1");
       section.appendChild(countLine);
 
+      /* Between the count and the results, because it is a statement about the
+         results directly below it and about nothing above it. */
+      section.appendChild(viewSwitcher());
+      syncView();
+
       resultsBox = make("div", "dir-results-box");
       resultsBox.setAttribute("data-dir-results", "");
       section.appendChild(resultsBox);
@@ -637,6 +818,7 @@
       chromeListeners = release(chromeListeners);
       resultListeners = release(resultListeners);
       facetNodes = [];
+      viewNodes = [];
 
       /* This surface creates no deck instance — there is no deck at #/ — so
          there is none to destroy(). It does open credential sheets: a chip
@@ -662,6 +844,8 @@
       facetList = [];
       selected = [];
       query = "";
+      view = "list";
+      lastResults = [];
     }
   };
 

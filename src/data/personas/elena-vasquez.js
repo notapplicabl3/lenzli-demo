@@ -16,62 +16,63 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Elena Vásquez",
-    niche: "Spanish court interpreter · civil trials",
-    availability: "Booking depositions through November",
+    niche: "Stained glass · historic restoration",
+    availability: "Booking survey visits through November",
     monogram: "EV"
   },
 
-  // Credentials-led: the court certification is requiredForRole — an
-  // uncertified interpreter cannot take the assignment. See rule 1 in shapes.js.
+  // Credentials-led: the lead certification is requiredForRole — disturbing
+  // paint and lead came in a pre-1978 building without it is not legal work.
+  // See rule 1 in shapes.js.
   trustBeat: "credentials",
 
   outcome: {
-    headline: "1,180 hearing hours across 6 counties",
-    context: "Superior court civil and family calendars, 2018-2026",
+    headline: "62 windows releaded, 6 sanctuaries",
+    context: "Historic churches and civic halls, 2018-2026 — no glass loss",
     artifact: {
-      label: "Glossary — construction defect",
+      label: "Cutline — nave window 4, full size",
       kind: "document",
-      caption: "Every case gets a term list before day one. Counsel gets it too, so we argue about facts instead of words."
+      caption: "Every panel gets a full-size cutline before a single piece is cut. The building keeps the drawing when I leave."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:elena-court-interpreter",
+      id: "urn:lenzli:cred:elena-lead-supervisor",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: true,
       issuer: {
-        name: "Judicial Council of California",
+        name: "California Department of Public Health — Lead-Related Construction",
         type: "Government registry",
-        mark: "JCC"
+        mark: "CDPH"
       },
       credentialSubject: { holderName: "Elena M. Vásquez" },
       achievement: {
-        name: "Certified Court Interpreter — Spanish",
-        shortName: "Court interpreter — Spanish",
-        criteria: "Bilingual interpreting examination + oath and registration with the Judicial Council",
+        name: "Certified Lead Supervisor — Lead-Related Construction",
+        shortName: "Lead Supervisor — CA",
+        criteria: "Accredited training course + the state certification examination under 17 CCR § 35000",
         skills: []
       },
       validFrom: "2018-04-05",
       validUntil: "2027-04-05",
-      credentialId: "CI-2•••••",
+      credentialId: "LRC-2•••••",
       verification: {
-        verifier: "California Judicial Council interpreter registry",
+        verifier: "CDPH lead certification lookup",
         checkedDaysAgo: 5,
-        destination: "courts.ca.gov",
+        destination: "cdph.ca.gov",
         mockResult: {
           status:"Active",
-          credential:"Certified Court Interpreter — Spanish",
+          credential:"Certified Lead Supervisor — Lead-Related Construction",
           holder:"Elena M. Vásquez",
           activeSince:"2018-04-05",
           expiresOn:"2027-04-05"
         }
       },
       scope: "Statewide — CA",
-      renewal: "30 CE hours + 40 assignments / 2 years",
+      renewal: "8-hour refresher course / 2 years",
       discipline: "No public disciplinary actions",
       evidenceUrl: null
     }
@@ -79,20 +80,20 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "She stopped the deposition to put a term on the record correctly, and the transcript survived a motion because of it.",
+      quote: "She stopped the removal to test the paint before anyone touched the sash, and the insurer signed the job off because of it.",
       author: "Howard Beaumont",
-      role: "Partner, civil litigation",
-      org: "Beaumont & Iyer",
+      role: "Director of properties",
+      org: "Beaumont & Iyer Property Trust",
       date: "2026-04"
     }
   ],
 
   close: {
-    scope: ["Depositions", "Civil trial", "Family calendar", "Certified transcript review"],
-    rateBand: "$95/hr, half-day minimum",
+    scope: ["Releading and restoration", "New commissions", "Protective glazing", "Condition surveys"],
+    rateBand: "$95/hr, or by the panel",
     responseTime: "Replies same day",
     timezone: "PT",
-    cta: { label: "Check a deposition date", action: "mock" }
+    cta: { label: "Check a survey date", action: "mock" }
   },
 
   depth: []

@@ -161,6 +161,44 @@
   color:var(--ink);
 }
 
+/* --- The view switcher ---------------------------------------------------- */
+/* Two real <button>s, 44px in their smallest dimension, each carrying
+   aria-pressed — the same ink-pill encoding .dir-facet uses above and .app-tab
+   uses in app.css, so state is never colour on its own. It sits between the
+   count and the results because it is a statement about what is drawn below it:
+   it changes the DRAWING and never the set or its order (F-8). */
+
+.dir-view{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.dir-view-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  min-width:72px;
+  padding:0 16px;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  color:var(--muted);
+  font-size:.8125rem;
+  font-weight:500;
+  box-shadow:var(--shadow-soft);
+  transition:border-color .3s var(--ease),color .3s var(--ease);
+}
+
+.dir-view-btn:hover{color:var(--ink);border-color:var(--line-strong);}
+
+.dir-view-btn[aria-pressed="true"]{
+  background:var(--ink);
+  border-color:var(--ink);
+  color:var(--paper);
+}
+
 /* --- Results -------------------------------------------------------------- */
 /* Every result renders: no pagination, no infinite scroll, no promoted slot and
    no ranking badge (F-8). Nothing on a card marks a record as thin, and no card
@@ -278,6 +316,84 @@
   overflow-wrap:anywhere;
 }
 
+/* --- Card view ------------------------------------------------------------ */
+/* The same results as the list, in the same order, all of them — auto-fill reads
+   the column count off the available width, so nothing measures anything in JS
+   and no card is ever given a bigger cell than another (F-8). A record without a
+   media plate gets the monogram it already had: no dashed frame, no dimming, no
+   prompt to fill something in, because there is no completion score in this
+   build (F-14).
+
+   No overflow:hidden anywhere on the card — base.css's one global
+   :focus-visible outline is drawn outside the button's box, and a clipped focus
+   ring is an invisible one. */
+
+.dir-cards{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));
+  gap:10px;
+}
+
+.dir-gcard{
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  box-shadow:var(--shadow-soft);
+  transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
+}
+
+.dir-gcard:hover{border-color:var(--line-strong);box-shadow:var(--shadow-card);}
+
+/* The whole card body is the control that opens the reel, well past the 44px
+   minimum on its own. The credential chip below it is its own button and sits
+   outside this one — the same split .dir-open makes in the list. */
+.dir-gcard-open{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  flex:1 1 auto;
+  width:100%;
+  min-height:44px;
+  padding:14px;
+  border-radius:var(--r-card);
+  text-align:left;
+}
+
+/* Larger than the list's plate because the grid gives it the room, and the plate
+   is what makes a wall of cards readable at a glance. Same element, same
+   photo-or-monogram rules — only the box is bigger. */
+.dir-gcard .dir-plate{width:64px;height:64px;}
+
+.dir-gcard .dir-monogram{font-size:1.25rem;}
+
+.dir-gcard-lines{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  min-width:0;
+}
+
+/* Availability exactly as the record stated it, in the help line's register — a
+   note about how to reach someone, never a badge that ranks them. */
+.dir-gcard-avail{
+  font-size:.75rem;
+  color:var(--muted-soft);
+  overflow-wrap:anywhere;
+}
+
+.dir-gcard-foot{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:0 14px 14px;
+}
+
 /* --- The empty state ------------------------------------------------------ */
 /* It names the one filter that would bring results back and offers to drop that
    one. It never offers to show everyone. */
@@ -321,4 +437,11 @@
   .dir-monogram{font-size:1.0625rem;}
 
   .dir-name{font-size:1.0625rem;}
+
+  /* The card's own plate is set by a two-class rule above, which outranks the
+     one-class rule three lines up whatever the order — so the wider form is
+     stated here at the same weight rather than left to lose silently. */
+  .dir-cards{gap:12px;}
+
+  .dir-gcard .dir-plate{width:72px;height:72px;}
 }

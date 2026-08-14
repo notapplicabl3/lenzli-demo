@@ -6,7 +6,7 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the ServSafe
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the glaze
 // certificate runs to 2029-02-06, so the dates look current — which is exactly
 // why tier C still reads "unverifiable" (rule 2 in shapes.js).
 // A thin record — one credential, no depth. Thin is a real record (F-12).
@@ -17,8 +17,8 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Lucia Ferrante",
-    niche: "Pastry lead · viennoiserie · wholesale",
-    availability: "Consulting one day a week",
+    niche: "Ceramicist · wood-fired tableware",
+    availability: "Taking two commissions this season",
     monogram: "LF"
   },
 
@@ -27,65 +27,65 @@ LENZLI.registerPersona({
   trustBeat: "testimonial",
 
   outcome: {
-    headline: "Took croissants from 90 to 340 a day",
-    context: "Wholesale bakery, 2024-2026 — same oven, one extra baker",
+    headline: "Took a firing from 90 to 340 pieces",
+    context: "Wood kiln co-op, 2024-2026 — same kiln, one extra stacking day",
     artifact: {
-      label: "Lamination schedule — 3-day cycle",
+      label: "Firing log — 3-day wood cycle",
       kind: "document",
-      caption: "The gain was in the retard, not the oven. This is the schedule the night crew runs."
+      caption: "The gain was in the stacking, not the heat. This is the log the night crew runs."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:lucia-servsafe",
+      id: "urn:lenzli:cred:lucia-glaze-chemistry",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "C",
-      // Unverifiable, not Active. The certificate lookup page exists and nobody
-      // read it, so we cannot say the certification is live even though the
-      // dates look current. See rule 2 in shapes.js.
+      // Unverifiable, not Active. The completion lookup exists and nobody read
+      // it, so we cannot say the certificate is live even though the dates look
+      // current. See rule 2 in shapes.js.
       status: "unverifiable",
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "National Restaurant Association",
+        name: "American Ceramic Society (Ceramic Arts Network)",
         type: "Training provider",
-        mark: "ServSafe"
+        mark: "ACerS"
       },
       credentialSubject: { holderName: "Lucia Ferrante" },
       achievement: {
-        name: "ServSafe Food Protection Manager Certification",
-        shortName: "ServSafe Manager",
-        criteria: "Proctored 90-question food safety examination",
+        name: "Certificate — Glaze Chemistry and Food-Safe Surfaces",
+        shortName: "Glaze chemistry",
+        criteria: "Ten-module course plus the end-of-course assessment at the required score",
         skills: []
       },
       validFrom: "2024-02-06",
       validUntil: "2029-02-06",
-      credentialId: "SS-7•••••",
+      credentialId: "ACS-7•••••",
       verification: null,
       scope: null,
-      renewal: "Recertify every 5 years",
+      renewal: "Refresher every 5 years",
       discipline: null,
-      evidenceUrl: "servsafe.com/verify"
+      evidenceUrl: "ceramicartsnetwork.org/verify"
     }
   ],
 
   testimonials: [
     {
-      quote: "She fixed our croissant before she fixed our schedule, and then she fixed our schedule.",
+      quote: "She fixed our glaze before she fixed our firing schedule, and then she fixed our firing schedule.",
       author: "Aidan Brophy",
       role: "Owner",
-      org: "Marrow Street Bakery",
+      org: "Marrow Street Clay",
       date: "2026-06"
     }
   ],
 
   close: {
-    scope: ["Viennoiserie production", "Lamination troubleshooting", "Wholesale scale-up", "Night crew training"],
-    rateBand: "$600/day, consulting",
+    scope: ["Tableware commissions", "Glaze development", "Wood-firing schedules", "Studio crew training"],
+    rateBand: "$600/day, studio consulting",
     responseTime: "Replies within two days",
     timezone: "ET",
-    cta: { label: "Ask about a production audit", action: "mock" }
+    cta: { label: "Ask about a studio visit", action: "mock" }
   },
 
   depth: []

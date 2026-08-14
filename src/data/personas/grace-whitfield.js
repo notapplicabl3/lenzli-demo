@@ -6,10 +6,10 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the mold
-// consultant licence was withdrawn on 2026-04-30, 104 days before it, while its
-// stated term still ran to 2027-02-28. Revoked is what the registry answers;
-// the term end is what the paper says.
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the studio
+// licence was withdrawn on 2026-04-30, 104 days before it, while its stated
+// term still ran to 2027-02-28. Revoked is what the registry answers; the term
+// end is what the paper says.
 // This record carries the corpus's only "revoked" credential. The create flow
 // cannot author that state (A1-21), so the directory's facets see it only here.
 // No availability line: this is one of four records the directory's
@@ -21,66 +21,66 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Grace Whitfield",
-    niche: "Home inspector · 1920-1975 housing stock",
+    niche: "Tattoo artist · fine-line blackwork",
     monogram: "GW"
   },
 
-  // Credentials-led: the TREC inspector licence is requiredForRole, and there
-  // are two tier-B holdings besides. Either clause of rule 1 fires.
+  // Credentials-led: the practitioner licence is requiredForRole, and there is
+  // a second tier-B holding besides. Either clause of rule 1 fires.
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Found $2.1M in deferred repairs",
-    context: "1,900 inspections across two Texas counties, 2016-2026",
+    headline: "410 cover-ups over scarred skin",
+    context: "1,900 sessions across two Texas studios, 2016-2026",
     artifact: {
-      label: "Sample report — 1948 pier-and-beam",
+      label: "Healed set — 12 months on",
       kind: "document",
-      caption: "Photos, then the cost band, then what I would fix first. Buyers read the last part."
+      caption: "Fresh work photographs itself. These are the same pieces at a year, which is the only set worth judging."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:grace-trec-inspector",
+      id: "urn:lenzli:cred:grace-tattoo-artist",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: true,
       issuer: {
-        name: "Texas Real Estate Commission",
+        name: "Texas Department of State Health Services",
         type: "Government registry",
-        mark: "TREC"
+        mark: "TX DSHS"
       },
       credentialSubject: { holderName: "Grace E. Whitfield" },
       achievement: {
-        name: "Professional Real Estate Inspector",
-        shortName: "TREC Inspector",
-        criteria: "194 classroom hours + the national and state inspector examinations",
+        name: "Licensed Tattoo Artist",
+        shortName: "Tattoo artist — TX",
+        criteria: "Bloodborne pathogen training + the sterilisation examination under Health & Safety Code ch. 146",
         skills: []
       },
       validFrom: "2016-07-11",
       validUntil: "2028-07-31",
-      credentialId: "TREC-9•••••",
+      credentialId: "TAT-9•••••",
       verification: {
-        verifier: "Texas Real Estate Commission licence lookup",
+        verifier: "Texas DSHS licence lookup",
         checkedDaysAgo: 7,
-        destination: "trec.texas.gov",
+        destination: "dshs.texas.gov",
         mockResult: {
           status:"Active",
-          credential:"Professional Real Estate Inspector",
+          credential:"Licensed Tattoo Artist",
           holder:"Grace E. Whitfield",
           activeSince:"2016-07-11",
           expiresOn:"2028-07-31"
         }
       },
       scope: "Single state — TX",
-      renewal: "32 CE hours / 2 years",
+      renewal: "Bloodborne pathogen refresher / 2 years",
       discipline: "No public disciplinary actions",
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:grace-mold-assessment",
+      id: "urn:lenzli:cred:grace-studio-licence",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       // Revoked, not expired: the department withdrew it 104 days before
@@ -98,21 +98,21 @@ LENZLI.registerPersona({
       },
       credentialSubject: { holderName: "Grace E. Whitfield" },
       achievement: {
-        name: "Mold Assessment Consultant",
-        shortName: "Mold Assessment",
-        criteria: "Approved training course + the state licensing examination",
+        name: "Body Art Studio Licence — operator of record",
+        shortName: "Studio licence",
+        criteria: "Studio inspection + the operator examination on sterilisation and record-keeping",
         skills: []
       },
       validFrom: "2021-03-01",
       validUntil: "2027-02-28",
-      credentialId: "MAC-1•••••",
+      credentialId: "BAS-1•••••",
       verification: {
         verifier: "Texas Dept. of Licensing and Regulation licence search",
         checkedDaysAgo: 7,
         destination: "tdlr.texas.gov",
         mockResult: {
           status:"Revoked",
-          credential:"Mold Assessment Consultant",
+          credential:"Body Art Studio Licence — operator of record",
           holder:"Grace E. Whitfield",
           activeSince:"2021-03-01",
           expiresOn:"2027-02-28"
@@ -120,11 +120,11 @@ LENZLI.registerPersona({
       },
       scope: "Single state — TX",
       renewal: "Not renewable while revoked",
-      discipline: "Revoked 2026-04-30 — continuing-education hours filed through a provider the department later decertified",
+      discipline: "Revoked 2026-04-30 — sterilisation training hours filed through a provider the department later decertified",
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:grace-internachi-cpi",
+      id: "urn:lenzli:cred:grace-apt",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "C",
       // Unverifiable, not Active. The membership page exists and nobody read
@@ -133,44 +133,44 @@ LENZLI.registerPersona({
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "International Association of Certified Home Inspectors",
+        name: "Alliance of Professional Tattooists",
         type: "Certification body",
-        mark: "InterNACHI"
+        mark: "APT"
       },
       credentialSubject: { holderName: "Grace Whitfield" },
       achievement: {
-        name: "Certified Professional Inspector (CPI)",
-        shortName: "InterNACHI CPI",
-        criteria: "Membership examination + annual continuing education",
+        name: "Certified Professional Tattooist Member",
+        shortName: "APT Member",
+        criteria: "Membership examination + an annual bloodborne pathogen refresher",
         skills: []
       },
       validFrom: "2016-09-02",
       validUntil: null,
-      credentialId: "NACHI-6•••••",
+      credentialId: "APT-6•••••",
       verification: null,
       scope: null,
       renewal: "Annual membership",
       discipline: null,
-      evidenceUrl: "nachi.org/verify"
+      evidenceUrl: "safe-tattoos.com/verify"
     }
   ],
 
   testimonials: [
     {
-      quote: "She told my buyers to walk on a house I had listed, and she was right, and I still send her every inspection I have.",
+      quote: "She turned down a cover-up I brought her and told me exactly why, and the piece she talked me into is the one I show people.",
       author: "Curtis Delaney",
-      role: "Broker",
-      org: "Delaney Property Group",
+      role: "Studio owner",
+      org: "Ironwood Tattoo Co.",
       date: "2026-01"
     }
   ],
 
   close: {
-    scope: ["Pre-listing inspection", "Buyer inspection", "Pier-and-beam foundations", "Re-inspection after repairs"],
-    rateBand: "$475-750 by square footage",
+    scope: ["Cover-ups over scar tissue", "Fine-line blackwork", "Consultation and stencil", "Touch-up at 12 months"],
+    rateBand: "$180/hr, $900 day rate",
     responseTime: "Replies within a day",
     timezone: "CT",
-    cta: { label: "Check an inspection date", action: "mock" }
+    cta: { label: "Check a booking date", action: "mock" }
   },
 
   depth: []

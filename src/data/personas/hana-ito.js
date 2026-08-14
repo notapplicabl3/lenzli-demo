@@ -6,7 +6,7 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the WAS
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the Animate
 // certification expires 27 days after it (19 days left in August + 8 in
 // September), which is inside the 90-day expiring window.
 // No video key — the video slot is Maya's only (A3-5).
@@ -16,8 +16,8 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Hana Ito",
-    niche: "WCAG 2.2 accessibility audits and fixes",
-    availability: "One audit slot in September",
+    niche: "Motion designer · broadcast graphics",
+    availability: "One project slot in September",
     monogram: "HI"
   },
 
@@ -26,18 +26,18 @@ LENZLI.registerPersona({
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Cleared 340 WCAG failures before launch",
-    context: "Retail checkout rebuild, 2025-2026 — passed the external audit first pass",
+    headline: "340 shots delivered, one revision pass",
+    context: "Streaming series title package, 2025-2026 — approved on the first review",
     artifact: {
-      label: "Audit log — 340 findings by component",
+      label: "Shot log — 340 shots by sequence",
       kind: "document",
-      caption: "One row per finding, mapped to the component that owns it. Engineers closed most of them without asking me a question."
+      caption: "One row per shot, mapped to the sequence that owns it. Production closed most of their notes without asking me a question."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:hana-cpacc",
+      id: "urn:lenzli:cred:hana-acp-after-effects",
       // OpenBadgeCredential is what makes this tier A: the badge carries a
       // signed OB 3.0 proof, so the label composes as "signed by {issuer}".
       type: ["VerifiableCredential", "OpenBadgeCredential", "AchievementCredential"],
@@ -46,39 +46,39 @@ LENZLI.registerPersona({
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "International Association of Accessibility Professionals",
+        name: "Adobe Inc. (Certiport)",
         type: "Certification body",
-        mark: "IAAP"
+        mark: "Adobe"
       },
       credentialSubject: { holderName: "Hana Ito" },
       achievement: {
-        name: "Certified Professional in Accessibility Core Competencies (CPACC)",
-        shortName: "CPACC",
-        criteria: "Proctored examination on disability, accessibility standards and organisational management",
-        skills: ["Accessibility standards", "Inclusive design"]
+        name: "Adobe Certified Professional — After Effects",
+        shortName: "After Effects (ACP)",
+        criteria: "Proctored examination on compositing, expressions and render workflow",
+        skills: ["Motion graphics", "Compositing"]
       },
       validFrom: "2024-03-14",
       validUntil: "2027-03-14",
-      credentialId: "IAAP-7•••••",
+      credentialId: "ACP-7•••••",
       verification: {
-        verifier: "IAAP credential registry",
+        verifier: "Adobe credential registry (Certiport)",
         checkedDaysAgo: 2,
-        destination: "accessibilityassociation.org",
+        destination: "certiport.com",
         mockResult: {
           status:"Active",
-          credential:"Certified Professional in Accessibility Core Competencies (CPACC)",
+          credential:"Adobe Certified Professional — After Effects",
           holder:"Hana Ito",
           activeSince:"2024-03-14",
           expiresOn:"2027-03-14"
         }
       },
       scope: null,
-      renewal: "45 continuing education credits / 3 years",
+      renewal: "Recertify on each 3-year version track",
       discipline: null,
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:hana-was",
+      id: "urn:lenzli:cred:hana-acp-animate",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       // Expiring, not Active: validUntil is 27 days after BUILD_DATE, inside
@@ -87,34 +87,34 @@ LENZLI.registerPersona({
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "International Association of Accessibility Professionals",
+        name: "Adobe Inc. (Certiport)",
         type: "Certification body",
-        mark: "IAAP"
+        mark: "Adobe"
       },
       credentialSubject: { holderName: "Hana Ito" },
       achievement: {
-        name: "Web Accessibility Specialist (WAS)",
-        shortName: "WAS",
-        criteria: "Proctored technical examination on accessible web implementation and testing",
+        name: "Adobe Certified Professional — Animate",
+        shortName: "Animate (ACP)",
+        criteria: "Proctored examination on rig setup, timeline animation and export",
         skills: []
       },
       validFrom: "2023-09-08",
       validUntil: "2026-09-08",
-      credentialId: "IAAP-3•••••",
+      credentialId: "ACP-3•••••",
       verification: {
-        verifier: "IAAP credential registry",
+        verifier: "Adobe credential registry (Certiport)",
         checkedDaysAgo: 2,
-        destination: "accessibilityassociation.org",
+        destination: "certiport.com",
         mockResult: {
           status:"Active",
-          credential:"Web Accessibility Specialist (WAS)",
+          credential:"Adobe Certified Professional — Animate",
           holder:"Hana Ito",
           activeSince:"2023-09-08",
           expiresOn:"2026-09-08"
         }
       },
       scope: null,
-      renewal: "45 continuing education credits / 3 years",
+      renewal: "Recertify on each 3-year version track",
       discipline: null,
       evidenceUrl: null
     }
@@ -122,20 +122,20 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "She rewrote her findings as tickets our engineers could close, which is the part every other audit skipped.",
+      quote: "She rewrote her notes as shot-level tickets our editors could close, which is the part every other vendor skipped.",
       author: "Devon Marsh",
-      role: "Engineering manager, web platform",
-      org: "Cassell Retail Group",
+      role: "Post supervisor",
+      org: "Cassell Streaming Group",
       date: "2026-06"
     }
   ],
 
   close: {
-    scope: ["WCAG 2.2 AA audit", "Screen-reader testing", "Component remediation", "VPAT drafting"],
-    rateBand: "$130/hr, or $9,500 per audit",
+    scope: ["Title packages", "Broadcast graphics", "Product explainers", "Template handoff to the in-house team"],
+    rateBand: "$130/hr, or $9,500 per package",
     responseTime: "Replies within a day",
     timezone: "JST",
-    cta: { label: "Ask about an audit slot", action: "mock" }
+    cta: { label: "Ask about a project slot", action: "mock" }
   },
 
   depth: []

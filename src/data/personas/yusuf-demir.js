@@ -19,7 +19,7 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Yusuf Demir",
-    niche: "Drone survey · earthwork volumes",
+    niche: "Aerial photographer · architecture, land",
     availability: "Booking flights through October",
     monogram: "YD"
   },
@@ -29,12 +29,12 @@ LENZLI.registerPersona({
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Dropped a 12-day survey to 3 days",
-    context: "Quarry stockpiles and haul road, 2025-2026 — volumes within 1.8% of ground truth",
+    headline: "A 12-day shoot list in 3 flight days",
+    context: "Resort and vineyard campaigns, 2025-2026 — every frame delivered graded",
     artifact: {
-      label: "Cut-and-fill map — 3 flight days",
+      label: "Flight plan — 3 days, 41 setups",
       kind: "document",
-      caption: "Ground control every 400 metres, then the volumes. The client checked two stockpiles by truck count.",
+      caption: "Sun angle and altitude fixed for every setup before I leave. The client checked two of them against the light on the day.",
       image: "src/brand/img/alex-depth.jpg"
     }
   },
@@ -80,7 +80,7 @@ LENZLI.registerPersona({
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:yusuf-photogrammetry",
+      id: "urn:lenzli:cred:yusuf-aerial-cinematography",
       type: ["SelfAssertedClaim"],
       tier: "D",
       status: null,
@@ -89,7 +89,7 @@ LENZLI.registerPersona({
       issuer: null,
       credentialSubject: { holderName: "Yusuf Demir" },
       achievement: {
-        name: "Photogrammetry — RTK ground control",
+        name: "Aerial cinematography — orbits and hyperlapse",
         criteria: null,
         skills: []
       },
@@ -106,17 +106,17 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "He flew it on a Tuesday and the volumes were on my desk Thursday, and the truck counts backed them up.",
+      quote: "He flew it on a Tuesday and the graded frames were on my desk Thursday, and the client picked the campaign from them that afternoon.",
       author: "Halil Arslan",
-      role: "Quarry operations manager",
-      org: "Bergama Aggregates",
+      role: "Creative director",
+      org: "Bergama Hotels",
       date: "2026-06"
     }
   ],
 
   close: {
-    scope: ["Stockpile volumes", "Earthwork progress", "Ground control setup", "Orthomosaic delivery"],
-    rateBand: "$1,900 per site day",
+    scope: ["Aerial stills", "Aerial video", "Site and light scouting", "Graded delivery"],
+    rateBand: "$1,900 per flight day",
     responseTime: "Replies same day",
     timezone: "TRT",
     cta: { label: "Ask about a flight day", action: "mock" }

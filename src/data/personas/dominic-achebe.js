@@ -6,7 +6,7 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the CSCS
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the CPP
 // runs to the end of 2027, well clear of the 90-day expiring window.
 // A thin record — one credential, no depth. Thin is a real record, not a
 // special case (F-12).
@@ -17,8 +17,8 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Dominic Achebe",
-    niche: "S&C coach · post-op return to sport",
-    availability: "Two athlete slots open",
+    niche: "Documentary photographer · long-form",
+    availability: "Two documentary slots open",
     monogram: "DA"
   },
 
@@ -27,52 +27,52 @@ LENZLI.registerPersona({
   trustBeat: "testimonial",
 
   outcome: {
-    headline: "31 ACL returns, median 9.4 months",
-    context: "Two D-I programs and a private gym, 2021-2026 — 2 re-tears",
+    headline: "3 essays published, 1 book edit",
+    context: "Delta fishing towns, 2021-2026 — one travelling exhibition",
     artifact: {
-      label: "Return-to-sport criteria sheet",
+      label: "Contact sheet — the levee, night two",
       kind: "document",
-      caption: "Nobody clears on a calendar in my gym. They clear on the numbers on this sheet."
+      caption: "I edit off the sheet, not off the back of the camera. The frames that failed stay next to the one that worked."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:dominic-cscs",
+      id: "urn:lenzli:cred:dominic-cpp",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "National Strength and Conditioning Association",
+        name: "Professional Photographers of America",
         type: "Certification body",
-        mark: "NSCA"
+        mark: "PPA"
       },
       credentialSubject: { holderName: "Dominic O. Achebe" },
       achievement: {
-        name: "Certified Strength and Conditioning Specialist (CSCS)",
-        shortName: "CSCS",
-        criteria: "Accredited bachelor's degree + the scientific-foundations and practical/applied examinations",
+        name: "Certified Professional Photographer (CPP)",
+        shortName: "CPP",
+        criteria: "Written examination + a juried image submission reviewed by the certification commission",
         skills: []
       },
-      validFrom: "2021-01-22",
+      validFrom: "2024-12-31",
       validUntil: "2027-12-31",
-      credentialId: "NSCA-3•••••",
+      credentialId: "PPA-3•••••",
       verification: {
-        verifier: "NSCA certification registry",
+        verifier: "PPA certification registry",
         checkedDaysAgo: 9,
-        destination: "nsca.com",
+        destination: "ppa.com",
         mockResult: {
           status:"Active",
-          credential:"Certified Strength and Conditioning Specialist (CSCS)",
+          credential:"Certified Professional Photographer (CPP)",
           holder:"Dominic O. Achebe",
-          activeSince:"2021-01-22",
+          activeSince:"2024-12-31",
           expiresOn:"2027-12-31"
         }
       },
       scope: null,
-      renewal: "6.0 CEUs / 3 years",
+      renewal: "Recertify every 3 years with continuing-education credits",
       discipline: null,
       evidenceUrl: null
     }
@@ -80,20 +80,20 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "He would not clear my winger until the hop test matched limb to limb, and I stopped arguing with him after the second season.",
+      quote: "He would not file the essay until the family had seen the frames, and I stopped arguing with him after the second story.",
       author: "Marta Kowalczyk",
-      role: "Head athletic trainer",
-      org: "Bellhaven University",
+      role: "Photo editor",
+      org: "Bellhaven Review",
       date: "2026-03"
     }
   ],
 
   close: {
-    scope: ["Post-op strength phases", "Return-to-sport testing", "In-season maintenance"],
-    rateBand: "$95/session, $680 per 8-week block",
+    scope: ["Long-form photo essays", "Editorial assignment", "Archive edit and sequencing", "Exhibition prints"],
+    rateBand: "$850/day, $4,200 per essay",
     responseTime: "Replies within two days",
     timezone: "ET",
-    cta: { label: "Ask about a return-to-sport block", action: "mock" }
+    cta: { label: "Ask about an assignment", action: "mock" }
   },
 
   depth: []

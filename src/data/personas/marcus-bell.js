@@ -6,9 +6,9 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the EPA 608
-// card has no expiry at all, and the NATE specialty runs to 2028 — neither is
-// anywhere near the 90-day expiring window.
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the guild
+// membership has no expiry at all, and the studio certificate states none
+// either — neither is anywhere near the 90-day expiring window.
 // No video key — the video slot is Maya's only (A3-5).
 
 LENZLI.registerPersona({
@@ -16,113 +16,114 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Marcus Bell",
-    niche: "Commercial refrigeration · grocery racks",
-    availability: "Taking service contracts for Q4",
+    niche: "Scenic painter · drops and faux finish",
+    availability: "Taking scenic contracts for Q4",
     monogram: "MB"
   },
 
-  // Credentials-led: EPA Section 608 is requiredForRole — handling refrigerant
-  // without it is not legal work. See rule 1 in shapes.js.
+  // Credentials-led: the guild card is requiredForRole — a signatory shop
+  // cannot put an unaffiliated painter on the call. See rule 1 in shapes.js.
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Cut callbacks 61% across 42 stores",
-    context: "Regional grocery chain, 2024-2026 — same tech headcount",
+    headline: "42 productions, zero repaint calls",
+    context: "Regional houses and one touring package, 2024-2026 — same crew size",
     artifact: {
-      label: "Rack log — 42 stores, 18 months",
+      label: "Paint elevation — the ballroom drop",
       kind: "document",
-      caption: "Every callback tagged to a cause. Four causes covered most of them."
+      caption: "Colour, cartoon and the mix ratios on one sheet. Any painter in the shop can pick it up and match me."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:marcus-epa608",
+      id: "urn:lenzli:cred:marcus-usa829",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: true,
       issuer: {
-        name: "ESCO Institute",
+        name: "United Scenic Artists, Local USA 829 (IATSE)",
         type: "Certification body",
-        mark: "ESCO"
+        mark: "USA 829"
       },
       credentialSubject: { holderName: "Marcus T. Bell" },
       achievement: {
-        name: "EPA Section 608 Technician Certification — Universal",
-        shortName: "EPA 608 Universal",
-        criteria: "Core plus Type I, II and III examinations under 40 CFR Part 82",
+        name: "Member in good standing — Scenic Artist classification",
+        shortName: "USA 829 — Scenic Artist",
+        criteria: "Practical journeyman examination in scenic art plus documented shop hours",
         skills: []
       },
       validFrom: "2014-08-19",
       validUntil: null,
-      credentialId: "ESCO-1•••••",
+      credentialId: "USA-1•••••",
       verification: {
-        verifier: "ESCO Institute certification lookup",
+        verifier: "United Scenic Artists membership registry",
         checkedDaysAgo: 6,
-        destination: "escogroup.org",
+        destination: "usa829.org",
         mockResult: {
           status:"Active",
-          credential:"EPA Section 608 Technician Certification — Universal",
+          credential:"Member in good standing — Scenic Artist classification",
           holder:"Marcus T. Bell",
           activeSince:"2014-08-19",
           expiresOn:"No stated expiry"
         }
       },
       scope: null,
-      renewal: "No stated expiry",
+      renewal: "Dues in good standing; no stated expiry",
       discipline: null,
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:marcus-nate-refrigeration",
+      id: "urn:lenzli:cred:marcus-scenic-program",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "C",
-      // Unverifiable, not Active. The dates look current, but nothing was
-      // checked, so we cannot say the certification is live. Rule 2, shapes.js.
+      // Unverifiable, not Active. The school's completion page exists and
+      // nobody read it, so we cannot say the certificate stands. Rule 2,
+      // shapes.js.
       status: "unverifiable",
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "North American Technician Excellence",
-        type: "Certification body",
-        mark: "NATE"
+        name: "Cobalt Studios School of Scenic Art",
+        type: "Training provider",
+        mark: "Cobalt"
       },
       credentialSubject: { holderName: "Marcus Bell" },
       achievement: {
-        name: "NATE Certified — Commercial Refrigeration Service",
-        shortName: "NATE Commercial Refrigeration",
-        criteria: "Core examination plus the commercial refrigeration service specialty",
+        name: "Certificate — Scenic Art Program, second year",
+        shortName: "Scenic art certificate",
+        criteria: "Two-year studio programme plus a juried portfolio review",
         skills: []
       },
-      validFrom: "2023-03-27",
-      validUntil: "2028-03-27",
-      credentialId: "NATE-5•••••",
+      validFrom: "2013-03-27",
+      validUntil: null,
+      credentialId: "COB-5•••••",
       verification: null,
       scope: null,
-      renewal: "Recertify every 5 years",
+      renewal: "No stated expiry",
       discipline: null,
-      evidenceUrl: "natex.org/verify"
+      evidenceUrl: "cobaltstudios.net/verify"
     }
   ],
 
   testimonials: [
     {
-      quote: "He found the four things causing our callbacks and wrote them down so the other techs could find them too.",
+      quote: "He found the four things the shop kept repainting and wrote the mixes down so the other painters could match them.",
       author: "Sylvia Deng",
-      role: "Facilities director",
-      org: "Harvest Row Markets",
+      role: "Production manager",
+      org: "Harvest Row Theatre",
       date: "2026-04"
     }
   ],
 
   close: {
-    scope: ["Rack service", "Callback root-cause review", "Refrigerant compliance", "Tech training"],
-    rateBand: "$118/hr, contract rate",
+    scope: ["Drops and backdrops", "Faux finishes and texture", "Paint elevations for the shop", "Crew training"],
+    rateBand: "$62/hr at scale, day rate on tour",
     responseTime: "Replies same day",
     timezone: "CT",
-    cta: { label: "Ask about a service contract", action: "mock" }
+    cta: { label: "Ask about a scenic contract", action: "mock" }
   },
 
   depth: []

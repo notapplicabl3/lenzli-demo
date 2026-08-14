@@ -1,70 +1,71 @@
 /* Invented person. Not a real individual. */
 //
-// src/data/personas/nadia-farouk.js — Nadia Farouk, PE.
+// src/data/personas/nadia-farouk.js — Nadia Farouk.
 //
 // Classic script, DOM-free. Loads after src/data/shapes.js.
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the PE
-// licence renews 2027-09-30, more than a year out and well clear of the 90-day
-// expiring window.
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the
+// contractor registration renews 2027-09-30, more than a year out and well
+// clear of the 90-day expiring window.
 // No video key — the video slot is Maya's only (A3-5).
 
 LENZLI.registerPersona({
   id: "nadia-farouk",
 
   identity: {
-    name: "Nadia Farouk, PE",
-    niche: "Structural engineer · bridge retrofit",
-    availability: "Open to a review-engineer role",
+    name: "Nadia Farouk",
+    niche: "Muralist · civic walls and transit",
+    availability: "Open to a 2026 commission",
     monogram: "NF"
   },
 
-  // Credentials-led: the PE licence is requiredForRole — nobody else may seal
-  // the drawings. See rule 1 in shapes.js.
+  // Credentials-led: the registration is requiredForRole — an unregistered
+  // artist cannot hold the city's installation contract. See rule 1 in
+  // shapes.js.
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Retrofit 14 spans, zero lane closures",
-    context: "State DOT seismic program, 2022-2026 — all 14 under budget",
+    headline: "14 civic murals, zero repaint claims",
+    context: "City percent-for-art programme, 2022-2026 — all 14 on budget",
     artifact: {
-      label: "Load rating — 1961 through-truss",
+      label: "Wall report — 1961 transit underpass",
       kind: "document",
-      caption: "Rated it, then found the retrofit that kept traffic on it. The second part is the job."
+      caption: "Surveyed the wall, then found the coating system that let the mural stay on it. The second part is the job."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:nadia-pe-wa",
+      id: "urn:lenzli:cred:nadia-contractor-wa",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: true,
       issuer: {
-        name: "Washington State Board of Registration for Professional Engineers",
+        name: "Washington State Department of Labor & Industries",
         type: "Government registry",
-        mark: "WA BRPELS"
+        mark: "WA L&I"
       },
       credentialSubject: { holderName: "Nadia S. Farouk" },
       achievement: {
-        name: "Professional Engineer — Civil/Structural",
-        shortName: "PE — Civil",
-        criteria: "ABET degree + 4 years of qualifying experience + the FE and PE examinations",
+        name: "Registered Specialty Contractor — Public Artwork Installation",
+        shortName: "Registered contractor",
+        criteria: "Surety bond + liability insurance + registration under RCW 18.27",
         skills: []
       },
       validFrom: "2017-09-30",
       validUntil: "2027-09-30",
-      credentialId: "PE-5•••••",
+      credentialId: "CC-5•••••",
       verification: {
-        verifier: "NCEES Records",
+        verifier: "L&I contractor registration lookup",
         checkedDaysAgo: 5,
-        destination: "ncees.org",
+        destination: "lni.wa.gov",
         mockResult: {
           status:"Active",
-          credential:"Professional Engineer — Civil/Structural",
+          credential:"Registered Specialty Contractor — Public Artwork Installation",
           holder:"Nadia S. Farouk",
           activeSince:"2017-09-30",
           expiresOn:"2027-09-30"
@@ -76,7 +77,7 @@ LENZLI.registerPersona({
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:nadia-load-rating",
+      id: "urn:lenzli:cred:nadia-mural-coatings",
       type: ["SelfAssertedClaim"],
       tier: "D",
       status: null,
@@ -85,7 +86,7 @@ LENZLI.registerPersona({
       issuer: null,
       credentialSubject: { holderName: "Nadia Farouk" },
       achievement: {
-        name: "Bridge load rating — AASHTO MBE",
+        name: "Mural coatings — anti-graffiti systems",
         criteria: null,
         skills: []
       },
@@ -102,20 +103,20 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "She turned down our first retrofit scheme, and the one she brought back cost less and kept the bridge open.",
+      quote: "She turned down our first wall, and the one she brought back cost less and has not been tagged since.",
       author: "Ray Okamoto",
-      role: "Bridge program manager",
-      org: "Cascade Region DOT",
+      role: "Public art programme manager",
+      org: "Cascade Regional Transit",
       date: "2026-03"
     }
   ],
 
   close: {
-    scope: ["Seismic retrofit", "Load rating", "Independent design review", "Construction support"],
-    rateBand: "$165/hr, or fixed fee per span",
+    scope: ["Civic murals", "Surface and site assessment", "Community design sessions", "Maintenance and re-coating"],
+    rateBand: "$165/hr, or fixed fee per wall",
     responseTime: "Replies within a day",
     timezone: "PT",
-    cta: { label: "Send a span to review", action: "mock" }
+    cta: { label: "Send a wall to review", action: "mock" }
   },
 
   depth: []

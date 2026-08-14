@@ -6,9 +6,9 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the GPC runs
-// to 2028-05-19, so the dates look current — which is exactly why tier C still
-// reads "unverifiable" (rule 2 in shapes.js).
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the listing
+// runs to 2028-05-19, so the dates look current — which is exactly why tier C
+// still reads "unverifiable" (rule 2 in shapes.js).
 // A thin record — one credential, no depth. Thin is a real record (F-12).
 // No availability line: this is one of four records the directory's
 // "availability not stated" facet reads (SPEC § 4 D5, Facets).
@@ -19,7 +19,7 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Samuel Okonkwo",
-    niche: "Grant writer · federal health awards",
+    niche: "Children's book illustrator · ages 4-8",
     monogram: "SO"
   },
 
@@ -28,64 +28,64 @@ LENZLI.registerPersona({
   trustBeat: "testimonial",
 
   outcome: {
-    headline: "$4.2M awarded on 11 submissions",
-    context: "Community health centers, 2020-2026 — 7 of 11 funded",
+    headline: "11 dummies out, 7 acquired",
+    context: "Trade picture books, 2020-2026 — four now in print",
     artifact: {
-      label: "Narrative section — HRSA renewal",
+      label: "Dummy spread — the bridge scene",
       kind: "document",
-      caption: "The needs section is where these are won or lost. This one cites the clinic's own intake numbers, not county averages."
+      caption: "The page turn is where these are won or lost. This spread hides the bridge until you turn it, which is the whole joke."
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:samuel-gpc",
+      id: "urn:lenzli:cred:samuel-scbwi",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "C",
-      // Unverifiable, not Active. The certificant lookup exists and nobody read
-      // it, so we cannot say the certification is live. Rule 2, shapes.js.
+      // Unverifiable, not Active. The member listing exists and nobody read
+      // it, so we cannot say the standing is current. Rule 2, shapes.js.
       status: "unverifiable",
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "Grant Professionals Certification Institute",
+        name: "Society of Children's Book Writers and Illustrators",
         type: "Certification body",
-        mark: "GPCI"
+        mark: "SCBWI"
       },
       credentialSubject: { holderName: "Samuel A. Okonkwo" },
       achievement: {
-        name: "Grant Professional Certified (GPC)",
-        shortName: "GPC",
-        criteria: "Documented grant experience plus the multiple-choice and written examinations",
+        name: "Published and Listed (PAL) Member",
+        shortName: "SCBWI PAL",
+        criteria: "Trade publication with a recognised house plus current membership",
         skills: []
       },
       validFrom: "2023-05-19",
       validUntil: "2028-05-19",
-      credentialId: "GPC-1•••••",
+      credentialId: "SCB-1•••••",
       verification: null,
       scope: null,
-      renewal: "Recertify every 3 years",
+      renewal: "Listing reviewed every 5 years",
       discipline: null,
-      evidenceUrl: "grantprofessionals.org/verify"
+      evidenceUrl: "scbwi.org/verify"
     }
   ],
 
   testimonials: [
     {
-      quote: "He rewrote our needs section using our own intake numbers, and we were funded on the resubmission.",
+      quote: "He rebuilt our page turns around the question a four-year-old actually asks, and the book sold on the resubmission.",
       author: "Delphine Carr",
-      role: "Executive director",
-      org: "Eastbank Community Health",
+      role: "Editorial director",
+      org: "Eastbank Children's Books",
       date: "2026-04"
     }
   ],
 
   close: {
-    scope: ["Federal health awards", "Needs assessment narrative", "Budget justification", "Resubmission after review"],
-    rateBand: "$85/hr, or $6,500 per full application",
+    scope: ["Picture-book illustration", "Character design and dummies", "Cover art", "Revisions after acquisitions"],
+    rateBand: "$6,500 per book, or $850 per spread",
     responseTime: "Replies within two days",
     timezone: "CT",
-    cta: { label: "Ask about a submission deadline", action: "mock" }
+    cta: { label: "Ask about a book schedule", action: "mock" }
   },
 
   depth: []

@@ -95,11 +95,11 @@
 <script src="src/brand/namespace.js"></script>
 <script src="src/brand/mark.js"></script>
 <script src="src/data/shapes.js"></script>
-<!-- These three first, in this order, so Object.keys(LENZLI.personas)[0] stays
-     "maya-chen" — src/about/about.js:85-99 falls back to it. -->
+<!-- maya first, ahead of every other persona tag, so Object.keys(LENZLI.personas)[0]
+     stays "maya-chen" — src/about/about.js:85-99 falls back to it. The tags
+     after it are the app-only roster and their order among themselves is not
+     load-bearing. -->
 <script src="src/data/persona.maya.js"></script>
-<script src="src/data/persona.dana.js"></script>
-<script src="src/data/persona.alex.js"></script>
 <script src="src/data/personas/amara-osei.js"></script>
 <script src="src/data/personas/dominic-achebe.js"></script>
 <script src="src/data/personas/elena-vasquez.js"></script>

@@ -6,9 +6,11 @@
 // Shapes and derivation rules: src/data/shapes.js.
 // 4 cards: HOOK, PROOF, TRUST, CLOSE. depth: [] fixes every record in this
 // folder at four (SPEC § 4 D4, F-12).
-// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the TRAQ
+// All dates are authored against LENZLI.BUILD_DATE = "2026-08-12": the colour
 // qualification expires 73 days after it (19 days left in August + 30 in
 // September + 24 in October), inside the 90-day expiring window.
+// The shop runs digital proofs alongside the presses, which is why a letterpress
+// record carries two colour-management holdings from the same issuer.
 // The proof plate names one of the six existing local images (A1-16). The
 // photo is a placeholder and the alt text says so; the plate's own caption
 // carries the meaning either way.
@@ -19,8 +21,8 @@ LENZLI.registerPersona({
 
   identity: {
     name: "Rosa Delgado",
-    niche: "Consulting arborist · tree risk · storms",
-    availability: "Available for post-storm assessments",
+    niche: "Letterpress printer · short-run type",
+    availability: "Available for short-run press work",
     monogram: "RD"
   },
 
@@ -29,58 +31,58 @@ LENZLI.registerPersona({
   trustBeat: "credentials",
 
   outcome: {
-    headline: "Kept 61 trees a contractor condemned",
-    context: "Municipal campus, 2025-2026 — one removal after the derecho",
+    headline: "Revived 61 fonts a shop had scrapped",
+    context: "Civic print collection, 2025-2026 — one font past saving",
     artifact: {
-      label: "Risk assessment — 61 trees, ranked",
+      label: "Specimen — 61 fonts, ranked by condition",
       kind: "document",
-      caption: "Each tree got a target, a likelihood and a consequence. Nine needed work that year.",
+      caption: "Each font got a proof, a condition grade and a use. Nine needed conservation that year.",
       image: "src/brand/img/dana-proof.jpg"
     }
   },
 
   credentials: [
     {
-      id: "urn:lenzli:cred:rosa-isa-arborist",
+      id: "urn:lenzli:cred:rosa-g7-expert",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       status: "active",
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "International Society of Arboriculture",
+        name: "Idealliance",
         type: "Certification body",
-        mark: "ISA"
+        mark: "Idealliance"
       },
       credentialSubject: { holderName: "Rosa M. Delgado" },
       achievement: {
-        name: "ISA Certified Arborist",
-        shortName: "Certified Arborist",
-        criteria: "Three years of arboriculture experience plus the ISA certification examination",
+        name: "G7 Expert",
+        shortName: "G7 Expert",
+        criteria: "Training plus a passed press-calibration submission reviewed by the certification panel",
         skills: []
       },
-      validFrom: "2019-02-15",
-      validUntil: "2028-02-15",
-      credentialId: "ISA-4•••••",
+      validFrom: "2025-02-15",
+      validUntil: "2027-02-15",
+      credentialId: "IDA-4•••••",
       verification: {
-        verifier: "International Society of Arboriculture registry",
+        verifier: "Idealliance certification registry",
         checkedDaysAgo: 7,
-        destination: "isa-arbor.com",
+        destination: "idealliance.org",
         mockResult: {
           status:"Active",
-          credential:"ISA Certified Arborist",
+          credential:"G7 Expert",
           holder:"Rosa M. Delgado",
-          activeSince:"2019-02-15",
-          expiresOn:"2028-02-15"
+          activeSince:"2025-02-15",
+          expiresOn:"2027-02-15"
         }
       },
       scope: null,
-      renewal: "30 CEUs / 3 years",
+      renewal: "Recertify every 2 years",
       discipline: null,
       evidenceUrl: null
     },
     {
-      id: "urn:lenzli:cred:rosa-traq",
+      id: "urn:lenzli:cred:rosa-colour-management",
       type: ["VerifiableCredential", "AchievementCredential"],
       tier: "B",
       // Expiring, not Active: validUntil is 73 days after BUILD_DATE, inside
@@ -89,27 +91,27 @@ LENZLI.registerPersona({
       selfAsserted: false,
       requiredForRole: false,
       issuer: {
-        name: "International Society of Arboriculture",
+        name: "Idealliance",
         type: "Certification body",
-        mark: "ISA"
+        mark: "Idealliance"
       },
       credentialSubject: { holderName: "Rosa M. Delgado" },
       achievement: {
-        name: "Tree Risk Assessment Qualification (TRAQ)",
-        shortName: "TRAQ",
-        criteria: "Two-day course plus the written and field assessments",
+        name: "Color Management Professional — Master",
+        shortName: "CMP Master",
+        criteria: "Two-day course plus the written and practical colour assessments",
         skills: []
       },
       validFrom: "2021-10-24",
       validUntil: "2026-10-24",
-      credentialId: "TRAQ-8•••••",
+      credentialId: "CMP-8•••••",
       verification: {
-        verifier: "International Society of Arboriculture registry",
+        verifier: "Idealliance certification registry",
         checkedDaysAgo: 7,
-        destination: "isa-arbor.com",
+        destination: "idealliance.org",
         mockResult: {
           status:"Active",
-          credential:"Tree Risk Assessment Qualification (TRAQ)",
+          credential:"Color Management Professional — Master",
           holder:"Rosa M. Delgado",
           activeSince:"2021-10-24",
           expiresOn:"2026-10-24"
@@ -124,20 +126,20 @@ LENZLI.registerPersona({
 
   testimonials: [
     {
-      quote: "The contractor wanted sixty-one trees down. She gave the council a ranked list instead, and the council could act on it.",
+      quote: "The shop wanted sixty-one fonts in the skip. She gave the library a ranked list instead, and the library could act on it.",
       author: "Marguerite Feeley",
-      role: "Grounds superintendent",
-      org: "Ashcombe Municipal Campus",
+      role: "Special collections librarian",
+      org: "Ashcombe Public Library",
       date: "2026-02"
     }
   ],
 
   close: {
-    scope: ["Tree risk assessment", "Post-storm triage", "Preservation plans", "Expert testimony"],
-    rateBand: "$140/hr, $1,100 per site report",
+    scope: ["Short-run letterpress", "Wood and metal type restoration", "Custom typography", "Press setup and training"],
+    rateBand: "$140/hr, $1,100 per short run",
     responseTime: "Replies within a day",
     timezone: "ET",
-    cta: { label: "Request a site walk", action: "mock" }
+    cta: { label: "Request a press date", action: "mock" }
   },
 
   depth: []
