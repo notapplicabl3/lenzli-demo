@@ -1,0 +1,354 @@
+/* owner.css — the owner's workbench at #/me.
+
+   Every class declared here carries the own- prefix (SPEC A1-15, § 3.5, AM-20).
+   The unprefixed classes owner.js's markup also uses — ctl, mono, display, and
+   the credential ladder's cred-entry / cred--a..d / cred-plain block — belong to
+   base.css and credentials.css and are CALLED, never redeclared. No bare element
+   selector enters this file, and no comment line in it begins with a class
+   token: AM-20 reads declared selectors out of this file, and a class named in
+   prose at the start of a line is exactly the false positive that check does not
+   deserve.
+
+   Every value resolves through tokens.css: paper, surface, ink, the two greys
+   and the two line greys. ZERO CHROMATIC ACCENT. Nothing on this surface encodes
+   a state in colour, and the credential rows encode theirs the way the ladder
+   already does — the word, the form and the ink density, never a hue.
+
+   NO METER, NO RING, NO SCORE, NO BAR OF ANY KIND (SPEC F-14). There is no
+   progress geometry in this sheet at all, and the only bar-shaped thing on the
+   surface is the deck's own segmented card index, which is deck.css's and counts
+   cards rather than the person.
+
+   THE STAGE IS THE SAME 9:19.5 CANVAS THE REEL USES, on paper rather than in
+   base.css's bezel frame, and smaller than the arrival surface's: this screen is
+   a workbench and the reel is one thing on it, not the whole of it. Its width is
+   capped by the height it implies so the reel and the first management block sit
+   on one screen together.
+
+   --chrome-top and --chrome-bottom ARE THE SEAM WITH deck.css, not decoration.
+   deck.css reads both — card-body pads its bottom by calc(--chrome-bottom + 10px)
+   and the end-cap by calc(--chrome-bottom + 6px). This stage carries chrome at
+   the top only (the index and the identity band); its controls sit under the
+   stage rather than inside it, so the bottom band is set small and the cards get
+   the space back.
+
+   Buttons reuse the ctl shape from base.css, which already carries the 44px
+   floor § 10 requires. This sheet adds emphasis and spacing and no new geometry.
+
+   Mobile-first, like base.css and app.css: one column, and a single media query
+   at 900px puts the reel beside the blocks that manage it. */
+
+/* --- The surface ---------------------------------------------------------- */
+
+.own-surface{
+  display:flex;
+  flex-direction:column;
+  padding:14px 0 0;
+}
+
+.own-head{margin-bottom:18px;}
+
+.own-title{
+  margin:0;
+  font-size:1.5rem;
+}
+
+.own-lede{
+  margin:8px 0 0;
+  max-width:58ch;
+  font-size:.875rem;
+  line-height:1.5;
+  color:var(--ink-soft);
+}
+
+.own-note{
+  margin:8px 0 0;
+  max-width:62ch;
+  font-size:.75rem;
+  line-height:1.55;
+  color:var(--muted);
+}
+
+/* --- The empty workbench (SPEC A1-19) ------------------------------------- */
+
+.own-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+
+.own-ctl{
+  flex:0 0 auto;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Emphasis without colour: a stronger line and a heavier weight, which is the
+   same two-channel encoding the credential ladder uses for tier. */
+.own-ctl--primary{
+  border-color:var(--line-strong);
+  font-weight:600;
+}
+
+/* --- Layout --------------------------------------------------------------- */
+
+.own-layout{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.own-column{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  min-width:0;
+}
+
+.own-block{
+  padding:16px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+}
+
+.own-block-head{margin-bottom:10px;}
+
+.own-block-title{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+
+.own-block-note{
+  margin:6px 0 0;
+  max-width:62ch;
+  font-size:.75rem;
+  line-height:1.55;
+  color:var(--muted);
+}
+
+/* The control row under every block. Wraps rather than scrolls, so no control
+   can be pushed off the edge of a narrow screen. */
+.own-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+/* --- The reel (SPEC § 3.4.1 M5, M12) -------------------------------------- */
+
+.own-reel{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.own-stage{
+  --chrome-top:64px;      /* band the card index + identity band occupy */
+  --chrome-bottom:16px;   /* this stage carries no controls inside it */
+  position:relative;
+  width:min(320px, 100%, calc((100svh - 320px) * 9 / 19.5));
+  min-width:216px;
+  aspect-ratio:9/19.5;
+  margin-top:4px;
+  overflow:hidden;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-block);
+}
+
+/* The segmented card index. createDeck fills it with one seg button per card;
+   the segments are deck.css's and are not restyled here. */
+.own-progress{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:3;
+  display:flex;
+  gap:4px;
+  min-height:10px;
+  padding:9px 12px 0;
+}
+
+/* The persistent identity band (SPEC § 3.4.1 M12). createDeck fills its three
+   data-slot nodes from the record it renders. */
+.own-identity{
+  position:absolute;
+  top:20px;
+  left:0;
+  right:0;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:6px 12px;
+}
+
+.own-identity-text{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.own-name{
+  font-family:var(--font-display);
+  font-size:.875rem;
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:-0.015em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.own-niche{
+  font-size:.6875rem;
+  line-height:1.3;
+  color:var(--muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.own-avail{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 8 auto;
+  font-size:.625rem;
+  color:var(--muted);
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+/* The ellipsis lives on the text box, not on the row: text-overflow needs a
+   block box and a flex container never gives its child text one. */
+.own-avail-text{
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.own-avail-dot{
+  width:6px;
+  height:6px;
+  flex:none;
+  border-radius:var(--r-pill);
+  background:var(--ink);
+}
+
+.own-deck{
+  position:absolute;
+  inset:0;
+}
+
+/* --- The credential list (SPEC F-13) -------------------------------------- */
+
+.own-cred-list{margin-top:12px;}
+
+/* The row itself is drawn by LENZLI.cred.renderTierRow and carries the ladder's
+   own chrome and its own bottom margin. Nothing here restyles it — this wrapper
+   only holds the row and the note that explains its rank together. */
+.own-cred{margin-bottom:10px;}
+
+.own-cred-note{
+  margin:0;
+  padding-left:2px;
+  max-width:60ch;
+  font-size:.6875rem;
+  line-height:1.5;
+  color:var(--muted);
+}
+
+/* Tier D leaves the ranking and lands here — the same split the wallet screen
+   makes, under the same label. */
+.own-self{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+
+.own-self-title{
+  margin:0 0 4px;
+  font-size:.6875rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* --- Export (SPEC F-15, A1-17) -------------------------------------------- */
+
+/* The landed idiom for a selectable pretty-printed record (about.css's record
+   block). It is the export, so it is sized to be read and selected rather than
+   glanced at, and the whole string is always in the DOM. */
+.own-record{
+  margin:12px 0 0;
+  padding:12px 13px;
+  max-height:340px;
+  overflow:auto;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  font-size:.6875rem;
+  line-height:1.55;
+  color:var(--ink-soft);
+  white-space:pre;
+  -webkit-user-select:text;
+  user-select:text;
+}
+
+/* The result of the control just pressed. Empty until something is pressed, and
+   it takes no height when it is empty. */
+.own-said{
+  margin:10px 0 0;
+  max-width:60ch;
+  font-size:.75rem;
+  line-height:1.5;
+  color:var(--ink-soft);
+}
+
+.own-said:empty{margin:0;}
+
+/* The synthetic download anchor. It is in the document only for the length of
+   one click and must never be reachable or visible. */
+.own-download{
+  position:absolute;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  pointer-events:none;
+}
+
+/* --- 900px and up --------------------------------------------------------- */
+/* The reel on one side, the blocks that manage it on the other. Below this the
+   reel leads, because seeing what is published is what the reader came for. */
+
+@media (min-width:900px){
+  .own-layout{
+    flex-direction:row;
+    align-items:flex-start;
+    gap:22px;
+  }
+
+  .own-column{flex:1 1 0;}
+
+  .own-column:first-child{
+    flex:0 0 auto;
+    position:sticky;
+    top:0;
+  }
+
+  .own-stage{
+    width:min(320px, calc((100svh - 260px) * 9 / 19.5));
+  }
+}

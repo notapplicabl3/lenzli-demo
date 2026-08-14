@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lenzli — the provable professional profile, at reel length</title>
+
+<!-- Stylesheets, folder order: brand, credentials, deck, about. This is the
+     complete list for the whole build; a file whose order has not landed yet
+     404s harmlessly on file:// and nothing else on the page changes. -->
+<link rel="stylesheet" href="src/brand/tokens.css">
+<link rel="stylesheet" href="src/brand/base.css">
+<link rel="stylesheet" href="src/credentials/credentials.css">
+<link rel="stylesheet" href="src/deck/deck.css">
+<link rel="stylesheet" href="src/about/about.css">
+</head>
+
+<body class="shell">
+
+<!-- Mount contract for the later orders. This document is written once, by the
+     shell order, and no later order edits it.
+
+       #stage            the 9:19.5 canvas. Everything below lives inside it.
+       #progress         segmented progress bar container — one button per card.
+       #deck             where compiled cards mount; inset below the chrome band
+                         (.stage sets --chrome-top and --chrome-bottom).
+       [data-slot=name]      active persona's name
+       [data-slot=niche]     active persona's niche line
+       [data-slot=availability]  active persona's availability text
+       [data-persona]    the three switcher buttons; boot() binds showPersona by
+                         this attribute and moves aria-pressed="true" to the
+                         active one. Maya carries it now because boot() renders
+                         the first registered deck.
+       [data-mark]       filled by mark.js at load; the value is the pixel size.
+       [data-wordmark]   filled by mark.js at load.
+-->
+
+<header class="shell-head">
+  <span class="lockup">
+    <span data-mark="26"></span>
+    <span data-wordmark></span>
+  </span>
+
+  <nav class="switcher" aria-label="Persona">
+    <button type="button" class="switch" data-persona="maya-chen" aria-pressed="true">Maya</button>
+    <button type="button" class="switch" data-persona="dana-okafor" aria-pressed="false">Dana</button>
+    <button type="button" class="switch" data-persona="alex-reyes" aria-pressed="false">Alex</button>
+  </nav>
+</header>
+
+<main class="frame">
+  <div class="stage" id="stage">
+
+    <div class="progress" id="progress" aria-label="Cards"></div>
+
+    <div class="identity" id="identity">
+      <span data-mark="18"></span>
+      <span class="identity-text">
+        <span class="identity-name" data-slot="name"></span>
+        <span class="identity-niche" data-slot="niche"></span>
+      </span>
+      <span class="availability">
+        <span class="availability-dot" aria-hidden="true"></span>
+        <span data-slot="availability"></span>
+      </span>
+    </div>
+
+    <div class="deck" id="deck"></div>
+
+    <div class="shell-controls">
+      <button type="button" class="ctl" onclick="LENZLI.openGrid()">Overview</button>
+      <button type="button" class="ctl" onclick="LENZLI.openAbout()">About</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- Ordered classic scripts, folder order: brand, data, credentials, deck,
+     about. namespace.js is first on the page, shapes.js precedes the persona
+     files that call registerPersona at load. Same rule as the stylesheets: the
+     list is complete for the whole build, and a file whose order has not landed
+     404s harmlessly. Relative paths only; no module loader, no network. -->
+<script src="src/brand/namespace.js"></script>
+<script src="src/brand/mark.js"></script>
+<script src="src/data/shapes.js"></script>
+<script src="src/data/persona.maya.js"></script>
+<script src="src/data/persona.dana.js"></script>
+<script src="src/data/persona.alex.js"></script>
+<script src="src/credentials/chip.js"></script>
+<script src="src/credentials/walletCard.js"></script>
+<script src="src/credentials/walletScreen.js"></script>
+<script src="src/credentials/legend.js"></script>
+<script src="src/deck/build.js"></script>
+<script src="src/deck/nav.js"></script>
+<script src="src/deck/cards.js"></script>
+<script src="src/about/about.js"></script>
+<script>LENZLI.boot();</script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+/* app.css — the app chrome and the router's two panels.
+   Every class declared here carries the app- prefix (SPEC A1-15, § 3.5); the
+   unprefixed classes the markup also uses — .lockup, .ctl, .mono, .display,
+   .sr-only — are base.css's and deck.css's and are called, never redeclared.
+   No bare element selector enters this file.
+   Every value resolves through tokens.css: paper and ink, zero chromatic accent.
+   The button shape is .ctl's, reused as-is; no new one is invented here.
+   Insets are never hardcoded — the shell pads by env(safe-area-inset-*), as
+   base.css's .shell does.
+
+   THE SHELL IS THE VIEWPORT AND #surface IS THE SCROLLER. The head, the notice
+   line and the permanent disclosure hold their place while the surface between
+   them scrolls, which is what makes the router's step 3 — reset the host's
+   scroll to top — a real reset rather than a no-op that lands the viewer
+   mid-page on every route change (SPEC § 3.4).
+
+   Mobile-first, as base.css is: the rules below 520px are the collapsed form —
+   lockup over a full-width nav, single column, tighter gutter — and the one
+   media query at 520px opens it back up. */
+
+.app-shell{
+  --app-measure:760px;    /* the column every band shares, so nothing drifts */
+  --app-gutter:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  height:100svh;
+  padding-top:env(safe-area-inset-top);
+  padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);
+  padding-left:env(safe-area-inset-left);
+}
+
+/* --- The chrome band ------------------------------------------------------ */
+
+.app-head{
+  flex:none;
+  width:100%;
+  max-width:var(--app-measure);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  padding:14px var(--app-gutter) 12px;
+}
+
+/* Search · Create · My profile · About. Four real buttons; the nav goes hidden
+   whole on #/r/<id>, where demo chrome is stripped (SPEC § 3.4.1 M6). */
+.app-nav{
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+/* An author display rule beats the UA stylesheet's [hidden]{display:none}
+   whatever the specificity, so the line above would otherwise leave the nav on
+   screen — and in the accessibility tree — with the attribute set. Measured on
+   this file: without this rule the About control is still laid out on
+   #/r/<id>. */
+.app-nav[hidden]{display:none;}
+
+/* .ctl carries the geometry — 44px minimum, pill, hairline, soft shadow. This
+   adds only the state the nav needs. */
+.app-tab{
+  flex:1 1 auto;
+  white-space:nowrap;
+  font-weight:500;
+  color:var(--muted);
+}
+
+.app-tab:hover{color:var(--ink);}
+
+/* The active surface, in ink. State is form and ink density, never colour. */
+.app-tab[aria-current="page"]{
+  background:var(--ink);
+  border-color:var(--ink);
+  color:var(--paper);
+}
+
+/* LENZLI.app.notice's one line. Non-blocking by construction: it takes a band
+   in the chrome and never a dialog, and it is absent from the layout entirely
+   until something has to be said. */
+.app-notice{
+  flex:none;
+  width:100%;
+  max-width:var(--app-measure);
+  margin:0 0 10px;
+  padding:10px 14px;
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-card);
+  background:var(--surface);
+  color:var(--ink-soft);
+  font-size:.8125rem;
+  line-height:1.4;
+}
+
+.app-notice[hidden]{display:none;}
+
+/* --- The router's host ---------------------------------------------------- */
+
+.app-surface{
+  flex:1 1 auto;
+  min-height:0;          /* lets the scroller shrink inside the fixed shell */
+  width:100%;
+  max-width:var(--app-measure);
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:0 var(--app-gutter) 20px;
+}
+
+/* --- The permanent disclosure (SPEC F-6, A1-24) --------------------------- */
+/* On every route and at every width, including #/r/<id>: the prototype says its
+   people are invented without depending on anyone opening About. */
+
+.app-disclosure{
+  flex:none;
+  width:100%;
+  max-width:var(--app-measure);
+  margin:0;
+  padding:10px var(--app-gutter) 12px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.6875rem;
+  letter-spacing:.04em;
+}
+
+/* --- The two panels ------------------------------------------------------- */
+/* not-found and not-landed, both real surfaces (SPEC A1-9). An unknown route is
+   shown and labelled here, never redirected away — a silent redirect would hide
+   exactly the failure these exist to demonstrate. */
+
+.app-panel{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  max-width:34rem;
+  padding:34px 0 0;
+}
+
+.app-panel-title{font-size:1.5rem;}
+
+.app-panel-note{
+  margin:0;
+  max-width:46ch;
+  color:var(--muted);
+  font-size:.9375rem;
+}
+
+/* The address that was not recognised, quoted back verbatim. */
+.app-panel-route{
+  margin:0;
+  padding:8px 14px;
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  color:var(--ink-soft);
+  font-size:.8125rem;
+  overflow-wrap:anywhere;
+}
+
+.app-panel-back{margin-top:4px;}
+
+/* --- 520px and up --------------------------------------------------------- */
+
+@media (min-width:520px){
+  .app-shell{--app-gutter:20px;}
+
+  .app-head{padding-top:20px;padding-bottom:14px;}
+
+  .app-nav{width:auto;}
+
+  .app-tab{flex:0 0 auto;}
+
+  .app-surface{padding-bottom:26px;}
+}

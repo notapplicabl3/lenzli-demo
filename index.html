@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lenzli — the provable professional profile, at reel length</title>
+
+<!-- Stylesheets, folder order: brand, credentials, deck, about, app, directory,
+     landing, create, owner. The order is load-bearing (SPEC § 3.5). This is the
+     complete list for the whole build; a file whose order has not landed yet
+     404s harmlessly on file:// and nothing else on the page changes. -->
+<link rel="stylesheet" href="src/brand/tokens.css">
+<link rel="stylesheet" href="src/brand/base.css">
+<link rel="stylesheet" href="src/credentials/credentials.css">
+<link rel="stylesheet" href="src/deck/deck.css">
+<link rel="stylesheet" href="src/about/about.css">
+<link rel="stylesheet" href="src/app/app.css">
+<link rel="stylesheet" href="src/directory/directory.css">
+<link rel="stylesheet" href="src/landing/landing.css">
+<link rel="stylesheet" href="src/create/create.css">
+<link rel="stylesheet" href="src/owner/owner.css">
+</head>
+
+<body class="app-shell">
+
+<!-- Mount contract for the surface orders. This document is written once, by the
+     shell order, and NO LATER ORDER EDITS IT (SPEC § 3.2) — a file left out of
+     the tag list below is unreachable for the rest of the build.
+
+       #surface          the router's host, and the only node it owns. Every
+                         surface mounts here through mount(host, params) and is
+                         emptied out of here on teardown (SPEC § 3.4).
+       [data-app-live]   the app's ONE aria-live="polite" region. The router
+                         announces each surface's title in it; app.notice
+                         announces a degraded condition in the same one.
+       [data-app-notice] LENZLI.app.notice(text)'s single line. Hidden until
+                         something has to be said.
+       [data-mark]       filled by mark.js at load; the value is the pixel size.
+       [data-wordmark]   filled by mark.js at load.
+       [data-app-nav]    the four-button nav. app.js hides it whole on #/r/<id>,
+                         where demo chrome is stripped (§ 3.4.1 M6).
+       [data-app-route]  the route that button navigates to, through router.go.
+       [data-app-surface] the surface name that route resolves to; app.js moves
+                         aria-current="page" to the button that matches.
+       [data-app-about]  the About control. It calls LENZLI.openAbout(); the
+                         About surface itself is loaded unedited (A1-24).
+
+     THE DISCLOSURE LINE AT THE FOOT IS PERMANENT (F-6, A1-24). It is markup, not
+     a surface's job, so the prototype states that its people are invented on
+     every route and at every width, whether or not anyone opens About.
+
+     THE ONLY INLINE CALL ON THIS PAGE IS LENZLI.appBoot(), at the very bottom.
+     The reel shell's own entry point is never invoked here (A1-3, A1-7): that
+     one is reel.html's, and it is the single thing that creates deck instance
+     zero, which the app must not have. Its name is deliberately not written out
+     anywhere in this document, so a grep for it over this file returns nothing.
+-->
+
+<header class="app-head">
+  <span class="lockup">
+    <span data-mark="26"></span>
+    <span data-wordmark></span>
+  </span>
+
+  <nav class="app-nav" aria-label="App" data-app-nav>
+    <button type="button" class="ctl app-tab" data-app-route="/" data-app-surface="browse">Search</button>
+    <button type="button" class="ctl app-tab" data-app-route="/create" data-app-surface="create">Create</button>
+    <button type="button" class="ctl app-tab" data-app-route="/me" data-app-surface="owner">My profile</button>
+    <button type="button" class="ctl app-tab" data-app-about>About</button>
+  </nav>
+</header>
+
+<p class="app-notice" data-app-notice hidden></p>
+
+<div class="sr-only" data-app-live aria-live="polite" aria-atomic="true"></div>
+
+<main class="app-surface" id="surface"></main>
+
+<p class="app-disclosure">Prototype. Invented people, mock data, no network.</p>
+
+<!-- Ordered classic scripts, folder order: brand, data, credentials, deck,
+     about, store, app, directory, landing, create, owner. Three of the orderings
+     are load-bearing and are marked below. Same rule as the stylesheets: the
+     list is complete for the whole build, and a file whose order has not landed
+     404s harmlessly. Relative paths only; no module loader, no network.
+
+     src/owner/export.js carries NO tag on purpose: § 3.4.1 M10 cut that file —
+     records.export(id), in the store's own file below, is the one export
+     implementation — so a tag here would be a permanent failed subresource load
+     on a page whose console must stay clean (§ 5.1 B assertion 31).
+
+     AM-23 is a source-ORDER row and its check is a plain grep over this file, so
+     neither path below is written out anywhere else in this document; the only
+     two lines that match it are the two tags themselves. -->
+<script src="src/brand/namespace.js"></script>
+<script src="src/brand/mark.js"></script>
+<script src="src/data/shapes.js"></script>
+<!-- These three first, in this order, so Object.keys(LENZLI.personas)[0] stays
+     "maya-chen" — src/about/about.js:85-99 falls back to it. -->
+<script src="src/data/persona.maya.js"></script>
+<script src="src/data/persona.dana.js"></script>
+<script src="src/data/persona.alex.js"></script>
+<script src="src/data/personas/amara-osei.js"></script>
+<script src="src/data/personas/dominic-achebe.js"></script>
+<script src="src/data/personas/elena-vasquez.js"></script>
+<script src="src/data/personas/grace-whitfield.js"></script>
+<script src="src/data/personas/hana-ito.js"></script>
+<script src="src/data/personas/idris-bello.js"></script>
+<script src="src/data/personas/joon-ho-park.js"></script>
+<script src="src/data/personas/lucia-ferrante.js"></script>
+<script src="src/data/personas/marcus-bell.js"></script>
+<script src="src/data/personas/nadia-farouk.js"></script>
+<script src="src/data/personas/oskar-nowak.js"></script>
+<script src="src/data/personas/priya-raghunathan.js"></script>
+<script src="src/data/personas/rosa-delgado.js"></script>
+<script src="src/data/personas/samuel-okonkwo.js"></script>
+<script src="src/data/personas/yusuf-demir.js"></script>
+<!-- chip.js before the other three: it creates LENZLI.cred, which they capture
+     at load. Its tag is also strictly ABOVE the store's records tag further
+     down, which installs cred.setLookup — the resolver that makes the
+     credential ladder reach user-created records (SPEC AM-23, § 3.1 E-7).
+     Reversed, that install is one console.info at load and entirely silent at
+     use: cred.find returns null, nothing throws, and every credential control
+     on every user-created record misses. -->
+<script src="src/credentials/chip.js"></script>
+<script src="src/credentials/walletCard.js"></script>
+<script src="src/credentials/walletScreen.js"></script>
+<script src="src/credentials/legend.js"></script>
+<script src="src/deck/build.js"></script>
+<script src="src/deck/nav.js"></script>
+<script src="src/deck/cards.js"></script>
+<script src="src/about/about.js"></script>
+<script src="src/store/storage.js"></script>
+<script src="src/store/records.js"></script>
+<script src="src/app/router.js"></script>
+<script src="src/app/app.js"></script>
+<script src="src/directory/search.js"></script>
+<script src="src/directory/directory.js"></script>
+<script src="src/landing/landing.js"></script>
+<script src="src/create/tier.js"></script>
+<script src="src/create/draft.js"></script>
+<script src="src/create/create.js"></script>
+<script src="src/owner/owner.js"></script>
+<script>LENZLI.appBoot();</script>
+
+</body>
+</html>

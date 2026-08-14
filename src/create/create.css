@@ -1,0 +1,426 @@
+/* create.css — the form vocabulary, invented here because there was nothing to
+   inherit: a scan of all five existing stylesheets returns zero
+   input/select/textarea/label/form/fieldset rules (SPEC § 3.5, A1-27).
+
+   EVERY CLASS DECLARED IN THIS FILE BEGINS mk-, AND EVERY SELECTOR IS
+   CLASS-SCOPED. No bare element selector enters the build (AM-20 greps for the
+   leak) — a bare input{} rule here would reach reel.html the day anyone puts a
+   control on it, and reel.html is frozen. The unprefixed classes the markup also
+   uses — .ctl, .display, .card, .overlay, .sr-only — are base.css's and
+   deck.css's and are called, never redeclared.
+
+   Every value resolves through tokens.css. ZERO CHROMATIC ACCENT: the invalid
+   state encodes in three channels and none of them is colour — the problem line
+   beneath the field in --ink, aria-invalid="true" on the control, and
+   border-color:var(--ink). Same discipline as the credential ladder's status
+   encoding.
+
+   Focus is the ONE global :focus-visible outline (base.css:37); the only thing
+   added here is border-color:var(--line-strong), so this surface has no focus
+   treatment of its own.
+
+   Buttons reuse .ctl's and .cta's existing geometry. This surface adds no new
+   button shape — .mk-add and .mk-remove carry spacing and nothing else.
+
+   NO COMPLETENESS METER, NO PROGRESS RING, NO SCORE OF ANY KIND (F-14). The one
+   number on this surface is the word budget, which is a constraint on a card and
+   never a grade of the person, and it never blocks publish (A1-20).
+
+   W9 and W10 APPEND to this sheet rather than re-founding it, so everything
+   § 3.5 names exists here already — including .mk-choice/.mk-choice-label, which
+   belong to W9's credential question, and .mk-tier/.mk-tier-why/.mk-exhibit,
+   which W9's derived tier line and chrome exhibit consume.
+
+   Mobile-first, like base.css and app.css: one column, and the single media
+   query at 820px puts the preview beside the form. */
+
+/* --- The surface ---------------------------------------------------------- */
+
+.mk-surface{
+  --mk-rhythm:14px;      /* the vertical step between field blocks (§ 3.5) */
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding:26px 0 0;
+}
+
+.mk-head{display:flex;flex-direction:column;gap:8px;max-width:52ch;}
+
+.mk-title{font-size:1.75rem;}
+
+.mk-lede{margin:0;color:var(--muted);font-size:.9375rem;}
+
+/* The standing shared-origin line (SPEC F-5/F-6, § 3.3). Every file:// document
+   shares one origin, so this states a fact about the machine. */
+.mk-origin{
+  margin:0;
+  padding:10px 0 0;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.75rem;
+  line-height:1.45;
+}
+
+.mk-layout{display:grid;gap:24px;align-items:start;}
+
+.mk-form{min-width:0;display:flex;flex-direction:column;gap:26px;}
+
+/* --- Sections ------------------------------------------------------------- */
+/* The four beats run in the spine's order and the optional depth section is
+   visibly separated from them by its own rule and inset, so effort does not go
+   into cards the evidence says are largely unseen (SPEC § 4 D7). */
+
+.mk-section{display:flex;flex-direction:column;gap:var(--mk-rhythm);}
+
+.mk-section-title{font-size:1.125rem;}
+
+.mk-section-note{
+  margin:0;
+  max-width:56ch;
+  color:var(--muted);
+  font-size:.8125rem;
+  line-height:1.45;
+}
+
+.mk-section-note[hidden]{display:none;}
+
+.mk-group{
+  display:flex;
+  flex-direction:column;
+  gap:var(--mk-rhythm);
+  padding:14px 0 0;
+  border-top:1px solid var(--line);
+}
+
+.mk-group-title{font-family:var(--font-ui);font-size:.875rem;font-weight:600;letter-spacing:0;}
+
+/* --- The field block ------------------------------------------------------ */
+/* Label above, control below, help beneath. 14px between blocks (§ 3.5). */
+
+.mk-field{display:flex;flex-direction:column;gap:6px;}
+
+/* Sentence case in the UI face, deliberately NOT the uppercase .2em eyebrow:
+   that is the deck's role, and borrowing it would make the form read as a
+   card (§ 3.5). */
+.mk-label{
+  font-family:var(--font-ui);
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--ink-soft);
+  line-height:1.3;
+}
+
+.mk-input,
+.mk-textarea,
+.mk-select{
+  width:100%;
+  min-height:44px;
+  padding:10px 12px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  color:var(--ink);
+  font:inherit;
+  transition:border-color .3s var(--ease);
+}
+
+.mk-textarea{min-height:88px;line-height:1.45;resize:vertical;}
+
+.mk-input:hover,
+.mk-textarea:hover,
+.mk-select:hover{border-color:var(--line-strong);}
+
+/* The one global outline does the focus work; this adds only the border. */
+.mk-input:focus-visible,
+.mk-textarea:focus-visible,
+.mk-select:focus-visible{border-color:var(--line-strong);}
+
+/* Placeholder text is a worked example, never a label (§ 3.5). */
+.mk-input::placeholder,
+.mk-textarea::placeholder{color:var(--muted-soft);}
+
+/* Channel three of the invalid state. The other two are the problem line below
+   and aria-invalid on the control itself — no colour is available here and none
+   is used (§ 3.5, § 10). */
+.mk-input[aria-invalid="true"],
+.mk-textarea[aria-invalid="true"],
+.mk-select[aria-invalid="true"]{border-color:var(--ink);}
+
+.mk-help{margin:0;color:var(--muted-soft);font-size:.75rem;line-height:1.45;}
+
+/* Channel one: the problem, in ink, directly beneath the field it belongs to. */
+.mk-problem{margin:0;color:var(--ink);font-size:.75rem;line-height:1.45;}
+
+.mk-problem[hidden]{display:none;}
+
+/* "62 / 65–75 words", and over budget "over budget — trim 8 words" set in --ink
+   by the modifier. It warns; it never blocks (A1-20). */
+.mk-budget{margin:0;color:var(--muted-soft);font-size:.75rem;}
+
+.mk-budget[hidden]{display:none;}
+
+.mk-budget--over{color:var(--ink);}
+
+/* --- Choice groups -------------------------------------------------------- */
+/* A real <fieldset> of visually hidden NATIVE radios, each paired with a pill on
+   .switch's ink-pill idiom (base.css:114-126). Native semantics are kept so the
+   arrow keys select within the group — safe precisely because wave 0's E-2 guard
+   stops the deck from eating them (A1-27). */
+
+.mk-choice{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:6px;}
+
+.mk-choice-legend{
+  padding:0;
+  font-family:var(--font-ui);
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+
+.mk-choice-list{display:flex;flex-wrap:wrap;gap:6px;}
+
+.mk-choice input{position:absolute;opacity:0;width:1px;height:1px;}
+
+.mk-choice-label{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:0 16px;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  color:var(--muted);
+  font-size:.875rem;
+  font-weight:500;
+  cursor:pointer;
+  transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);
+}
+
+.mk-choice-label:hover{color:var(--ink);border-color:var(--line-strong);}
+
+.mk-choice input:checked + .mk-choice-label{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+
+/* The hidden radio cannot show the outline itself, so its pill carries it. */
+.mk-choice input:focus-visible + .mk-choice-label{outline:2px solid var(--ink);outline-offset:2px;}
+
+/* --- Optional depth ------------------------------------------------------- */
+
+.mk-blocks{display:flex;flex-direction:column;gap:12px;}
+
+.mk-block{
+  display:flex;
+  flex-direction:column;
+  gap:var(--mk-rhythm);
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  background:var(--surface);
+}
+
+.mk-block-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+
+.mk-block-title{font-family:var(--font-ui);font-size:.875rem;font-weight:600;letter-spacing:0;}
+
+.mk-block-body{display:flex;flex-direction:column;gap:var(--mk-rhythm);}
+
+/* .ctl carries the geometry — 44px minimum, pill, hairline, soft shadow. These
+   two add spacing and nothing else: no new button shape enters this surface. */
+.mk-add{align-self:flex-start;}
+
+.mk-remove{flex:none;}
+
+/* --- The seams the later orders fill -------------------------------------- */
+/* Both are empty until their order lands, and an empty seam takes no room. */
+
+.mk-credentials{display:flex;flex-direction:column;gap:var(--mk-rhythm);}
+
+.mk-credentials:empty{display:none;}
+
+.mk-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+
+.mk-actions:empty{display:none;}
+
+/* W9's derived tier line — "Tier C — issuer link", one sentence of why beneath
+   it, and the LENZLI.cred.renderTierRow exhibit beside the preview. Declared
+   here so W9 appends behaviour to this sheet rather than re-founding it
+   (SPEC § 3.5, ORDERS W8 step 8). Tier is shown as derived and never chosen
+   (F-11), so the line is type, not a control. */
+.mk-tier{
+  margin:0;
+  font-family:var(--font-ui);
+  font-size:.875rem;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.mk-tier-why{margin:0;max-width:56ch;color:var(--muted);font-size:.75rem;line-height:1.45;}
+
+.mk-exhibit{display:flex;flex-direction:column;gap:8px;}
+
+/* --- The credential sub-flow --------------------------------------------- */
+/* Appended by W9. Everything above this rule is W8's, and § 3.5's vocabulary is
+   consumed rather than re-founded: the six questions are .mk-field blocks, the
+   two choice groups are .mk-choice fieldsets, each credential sits in a
+   .mk-block, and the derived tier line uses .mk-tier/.mk-tier-why as declared.
+   Only what § 3.5 did not name is added below, every class mk-prefixed, no bare
+   element selector, no colour — and NOTHING is added to credentials.css, which
+   is not writable and already owns every rule the exhibit's chrome resolves
+   through (.cred-entry, .cred--a/b/c, and .cred--d's withholding of all four). */
+
+/* A question that belongs to a tier the answers did not earn is hidden, not
+   removed: the text stays in the form so switching back brings it with you.
+   The class rule above wins over the UA's [hidden] on specificity, so the
+   attribute needs its own line here — the same reason .mk-problem[hidden] and
+   .mk-budget[hidden] exist above. */
+.mk-field[hidden]{display:none;}
+
+/* What the answers earned, set off from the questions that earned it. */
+.mk-derived{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:14px 0 0;
+  border-top:1px solid var(--line);
+}
+
+.mk-tier-status{
+  margin:0;
+  font-family:var(--font-ui);
+  font-size:.75rem;
+  color:var(--ink-soft);
+  line-height:1.45;
+}
+
+/* Tier and status are shown as derived, never chosen (F-11, A1-21), and this is
+   the line that says so. */
+.mk-tier-note{margin:0;color:var(--muted-soft);font-size:.75rem;line-height:1.45;}
+
+/* A name mismatch is INFORMATION, not an error, so it is deliberately not given
+   the invalid state's treatment: no aria-invalid, no ink border on the control.
+   It is marked by a rule beside it and by ink density — a form difference and a
+   density difference, and no colour, as everything in this build is. */
+.mk-mismatch{
+  margin:0;
+  padding-left:10px;
+  border-left:1px solid var(--line-strong);
+  color:var(--ink);
+  font-size:.75rem;
+  line-height:1.45;
+}
+
+.mk-mismatch[hidden]{display:none;}
+
+.mk-exhibit-label{
+  margin:0;
+  font-family:var(--font-ui);
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+
+/* The host, and nothing more. Every pixel of what lands inside it is
+   credentials.css's tier chrome, drawn by LENZLI.cred.renderTierRow (E-8) —
+   which is the point of the exhibit: the chrome the answers earned is the real
+   chrome, not a picture of it. */
+.mk-exhibit-row{min-height:44px;}
+
+/* --- The live preview ----------------------------------------------------- */
+/* The real renderer, not a lookalike: a named createDeck instance compiled by
+   the same buildDeck the reel runs. It carries no progress bar and no grid
+   control beside it — a preview deck differs from a full one only in what the
+   SURFACE renders around it (§ 3.4.1 M4). */
+
+.mk-side{display:flex;flex-direction:column;gap:10px;min-width:0;}
+
+.mk-side-title{font-size:1.125rem;}
+
+.mk-preview{
+  --chrome-bottom:12px;  /* deck.css insets the card body by this; the preview
+                            has no bottom controls to clear */
+  position:relative;
+  height:min(56svh,520px);
+  aspect-ratio:9/19.5;
+  margin-inline:auto;
+  overflow:hidden;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  box-shadow:var(--shadow-soft);
+}
+
+.mk-screen{position:absolute;inset:0;}
+
+/* The grid overlay's host (§ 3.4.1 M5), named so the end-cap's overview control
+   opens inside the preview instead of silently doing nothing. It sits over the
+   deck and must not swallow the taps that move it, so it passes pointer input
+   through until it actually holds an overlay. */
+.mk-overlay-host{position:absolute;inset:0;pointer-events:none;}
+
+.mk-overlay-host > *{pointer-events:auto;}
+
+/* --- Publish, and the lines under it -------------------------------------- */
+/* Appended by W10. .cta carries the geometry — 48px, pill, paper, card shadow —
+   and .mk-publish adds nothing but its place in W8's .mk-actions row, which is
+   already a wrapping flex row. The two block-level lines below claim the full
+   row so they wrap onto their own lines beneath the control.
+
+   THE CONTROL IS NEVER DISABLED. Not by the word budget (A1-20) and not by
+   anything else: there is no :disabled rule here because there is no state in
+   which this build switches publish off. It refuses in words instead, on
+   .mk-said and .mk-problems, and only when the record would not compile. */
+
+.mk-publish{flex:none;}
+
+.mk-standing{
+  margin:0;
+  flex:1 1 24ch;
+  color:var(--muted-soft);
+  font-size:.75rem;
+  line-height:1.45;
+}
+
+/* What publish just answered. Ink, because it is the surface speaking about
+   what the author just did — and no colour, like everything else here. */
+.mk-said{
+  flex:1 1 100%;
+  margin:0;
+  color:var(--ink);
+  font-size:.8125rem;
+  line-height:1.45;
+}
+
+.mk-said[hidden]{display:none;}
+
+/* What a refused publish is waiting for. The same three channels the field's own
+   invalid state uses — the words, the ink, and the field-level line and
+   aria-invalid that appear with it — and none of them colour. */
+.mk-problems{
+  flex:1 1 100%;
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.mk-problems[hidden]{display:none;}
+
+.mk-problem-item{color:var(--ink);font-size:.75rem;line-height:1.45;}
+
+/* The preview's credential controls are the real ones, disabled: a draft belongs
+   to no record yet, so the wallet they open resolves nowhere. Everything about
+   them stays as the published reel will draw it — this only takes back the
+   pointer that promised a tap would do something. The deck's own mock control
+   (.play, deck.css) is drawn exactly this way. */
+.mk-inert{cursor:default;}
+
+/* --- 820px and up --------------------------------------------------------- */
+/* Form on one side, the real renderer on the other (§ 4 D7). The preview sticks
+   to the top of the scroller so it stays in view while the form runs past it. */
+
+@media (min-width:820px){
+  .mk-layout{grid-template-columns:minmax(0,1fr) auto;}
+
+  .mk-side{position:sticky;top:0;padding-top:2px;}
+}

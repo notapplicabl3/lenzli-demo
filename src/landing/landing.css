@@ -1,0 +1,244 @@
+/* landing.css — the link-landing surface at #/r/<personaId>.
+
+   Every class declared here carries the land- prefix (SPEC A1-15, § 3.5, AM-20).
+   The unprefixed classes landing.js's markup also uses (.ctl, .mono, .display,
+   and app.css's app-panel block) are base.css's and app.css's and are CALLED,
+   never redeclared. No bare element selector enters this file, and no comment
+   line in it begins with a class token — AM-20 reads declared selectors out of
+   this file, and a class named in prose at the start of a line is exactly the
+   false positive that check does not deserve.
+
+   Every value resolves through tokens.css: paper, ink and the two line greys.
+   Zero chromatic accent. The button shape is .ctl's, reused as-is; no new one is
+   invented here.
+
+   THE STAGE IS THE SAME 9:19.5 CANVAS THE REEL USES, on paper rather than in
+   base.css's bezel frame — the bezel is demo chrome, and § 3.4.1 M6 strips demo
+   chrome from this route. Its width is capped by the height it implies, so the
+   whole arrival fits one screen inside app.css's #surface scroller: a viewer who
+   has to scroll to find the commitment price has been given a gate by accident.
+
+   --chrome-top and --chrome-bottom ARE THE SEAM WITH deck.css, not decoration.
+   deck.css reads both: .card-body pads its bottom by calc(var(--chrome-bottom) +
+   10px) and .endcap by calc(var(--chrome-bottom) + 6px). Setting them here is
+   what keeps the commitment-price band clear of every card's content, including
+   the CLOSE card's end-cap strip. */
+
+.land-surface{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:14px 0 0;
+}
+
+.land-stage{
+  --chrome-top:70px;      /* band the progress bar + identity overlay occupy */
+  --chrome-bottom:92px;   /* band the commitment price + the two controls occupy */
+  position:relative;
+  width:min(392px, 100%, calc((100svh - 200px) * 9 / 19.5));
+  aspect-ratio:9/19.5;
+  overflow:hidden;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-block);
+}
+
+/* --- Stage chrome --------------------------------------------------------- */
+
+/* The segmented index. createDeck fills it with one .seg button per card; the
+   segments are deck.css's and are not restyled here. */
+.land-progress{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:3;
+  display:flex;
+  gap:4px;
+  min-height:10px;
+  padding:10px 14px 0;
+}
+
+/* The persistent identity band (SPEC § 3.4.1 M12). createDeck fills its three
+   [data-slot] nodes from the record it renders. */
+.land-identity{
+  position:absolute;
+  top:22px;
+  left:0;
+  right:0;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:6px 14px;
+}
+
+.land-identity-text{display:flex;flex-direction:column;min-width:0;}
+
+/* The surface's <h1>. base.css already gives it the display face, the weight and
+   margin:0; this sets only the size the band can carry. */
+.land-name{
+  font-size:.9375rem;
+  line-height:1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.land-niche{
+  font-size:.75rem;
+  color:var(--muted);
+  line-height:1.3;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.land-avail{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 8 auto;
+  font-size:.6875rem;
+  color:var(--muted);
+  overflow:hidden;          /* the backstop: the row never spills the stage */
+  white-space:nowrap;
+}
+
+/* The ellipsis lives on the text box, not on .land-avail: text-overflow needs a
+   block box and a flex container never gives its child text one. */
+.land-avail-text{overflow:hidden;text-overflow:ellipsis;}
+
+.land-avail-dot{
+  width:7px;
+  height:7px;
+  flex:none;
+  border-radius:var(--r-pill);
+  background:var(--ink);
+}
+
+/* Where createDeck mounts the compiled cards, inset past the band above. */
+.land-deck{
+  position:absolute;
+  top:var(--chrome-top);
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:1;
+}
+
+/* --- The commitment price, and the escape (SPEC A1-18, § 4 D6) ------------- */
+
+/* Chrome beside card 1, never a gate over it. The band carries its own paper so
+   it stays legible over the CLOSE card, which is the spine's one inverted
+   surface. Both overlays that can cover this stage sit above it by design: the
+   grid overlay at z-index 5, credential sheets at 6. */
+.land-chrome{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:10px 14px 12px;
+  background:var(--paper);
+  border-top:1px solid var(--line);
+}
+
+.land-price{
+  margin:0;
+  font-size:.75rem;
+  letter-spacing:.02em;
+  color:var(--muted);
+}
+
+.land-controls{display:flex;gap:8px;}
+
+/* .ctl carries the geometry — 44px minimum, pill, hairline, soft shadow. This
+   adds only the share of the band each control takes. */
+.land-ctl{flex:1 1 auto;}
+
+/* --- The share exhibit ---------------------------------------------------- */
+
+/* A labelled design mock of a link unfurl, opened through cred.sheet. It is an
+   exhibit and reads as one: the label comes first, and the dashed rule is the
+   same "this is not the real thing" form language .card--placeholder uses. */
+
+.land-share{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:14px 0 0;
+}
+
+.land-share-note{
+  margin:0;
+  padding:8px 12px;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--r-card);
+  color:var(--ink-soft);
+  font-size:.75rem;
+  line-height:1.4;
+}
+
+.land-unfurl{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-card);
+  background:var(--surface);
+  box-shadow:var(--shadow-soft);
+}
+
+.land-unfurl-plate{
+  flex:none;
+  width:56px;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  background:var(--paper);
+}
+
+.land-unfurl-monogram{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:1.125rem;
+  letter-spacing:-0.02em;
+}
+
+.land-unfurl-text{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  min-width:0;
+}
+
+.land-unfurl-name{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.9375rem;
+  letter-spacing:-0.02em;
+}
+
+.land-unfurl-line{
+  font-size:.75rem;
+  color:var(--muted);
+  line-height:1.3;
+}
+
+.land-unfurl-meta{font-size:.6875rem;color:var(--muted-soft);}
+
+.land-share-addr{
+  margin:0;
+  color:var(--muted-soft);
+  font-size:.6875rem;
+  overflow-wrap:anywhere;
+}

@@ -1,0 +1,324 @@
+/* directory.css — the browse/search surface at #/.
+   Every class declared here carries the dir- prefix (SPEC A1-15, § 3.5); the
+   unprefixed classes the surface also uses — .ctl, .eyebrow, .display, and the
+   .cred-* chip classes — belong to base.css and credentials.css and are called,
+   never redeclared. NO BARE ELEMENT SELECTOR enters this file, so nothing here
+   can reach reel.html or any other surface by accident (AM-20).
+
+   Every value resolves through tokens.css and no colour literal is declared:
+   paper, ink and the two hairlines, exactly as the rest of the build. A media
+   plate is dimmed by opacity over --ink rather than by a wash literal, which is
+   the same three-channel discipline the deck uses for its own plates and adds no
+   new value to the palette.
+
+   Mobile-first, as base.css and app.css are: the rules below 520px are the
+   collapsed form and the one media query at 520px opens it up. The whole surface
+   sits inside app.css's #surface, which is the scroller — this file sets no
+   height and no overflow of its own.
+
+   The field vocabulary here is deliberately NOT the create surface's mk- one
+   (§ 3.5): that is a form vocabulary for authoring, and this is one control. It
+   borrows the same shape — label above, control below, help line beneath in
+   --muted-soft — because a viewer should not have to learn two field idioms in
+   one app. */
+
+.dir-surface{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:26px 0 0;
+}
+
+.dir-title{font-size:1.75rem;}
+
+.dir-lede{
+  margin:0;
+  max-width:52ch;
+  color:var(--muted);
+  font-size:.9375rem;
+}
+
+/* --- The query box -------------------------------------------------------- */
+/* One real <input>, 44px minimum, with a visible label above it. The
+   placeholder is an example and never the label (§ 3.5). */
+
+.dir-query-block{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.dir-label{
+  font-family:var(--font-ui);
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+
+.dir-query{
+  width:100%;
+  min-height:44px;
+  padding:10px 14px;
+  -webkit-appearance:none;
+  appearance:none;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  color:var(--ink);
+  font:inherit;
+}
+
+/* The one global :focus-visible outline (base.css:37) carries the focus ring;
+   this only firms the hairline underneath it. */
+.dir-query:focus-visible{border-color:var(--line-strong);}
+
+.dir-query::placeholder{color:var(--muted-soft);}
+
+.dir-help{
+  margin:0;
+  color:var(--muted-soft);
+  font-size:.75rem;
+}
+
+/* --- Facets --------------------------------------------------------------- */
+/* Three groups of real <button>s, each 44px in its smallest dimension, each
+   carrying aria-pressed. State is an ink pill — the same encoding .switch uses
+   in base.css and .app-tab uses in app.css — never colour.
+
+   The panel is collapsed on arrival behind .dir-filters, because forty-three
+   controls at the 44px minimum are a whole screen and § 3.4.1 M7's arrival state
+   is the people and the count, not the filters. .ctl carries the button's
+   geometry; this adds only where it sits. */
+
+.dir-filters{align-self:flex-start;}
+
+.dir-facets{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* An author display rule beats the UA stylesheet's [hidden]{display:none}
+   whatever the specificity, so without this the collapsed panel would still be
+   laid out — and still be in the accessibility tree — with the attribute set.
+   The same trap app.css:57-62 documents for the nav. */
+.dir-facets[hidden]{display:none;}
+
+.dir-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.dir-group-title{margin:0;font-size:.6875rem;}
+
+.dir-group-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.dir-facet{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:44px;
+  min-width:44px;
+  padding:0 14px;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--surface);
+  color:var(--muted);
+  font-size:.8125rem;
+  font-weight:500;
+  text-align:left;
+  box-shadow:var(--shadow-soft);
+  transition:border-color .3s var(--ease),color .3s var(--ease);
+}
+
+.dir-facet:hover{color:var(--ink);border-color:var(--line-strong);}
+
+.dir-facet[aria-pressed="true"]{
+  background:var(--ink);
+  border-color:var(--ink);
+  color:var(--paper);
+}
+
+/* How many people are like this, across the whole set — not how many are left,
+   which would move on every keystroke and read as a score of the query. */
+.dir-facet-count{font-size:.6875rem;color:var(--muted-soft);}
+
+.dir-facet[aria-pressed="true"] .dir-facet-count{color:var(--line-strong);}
+
+/* --- The explicit count --------------------------------------------------- */
+
+.dir-count{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:1.0625rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+}
+
+/* --- Results -------------------------------------------------------------- */
+/* Every result renders: no pagination, no infinite scroll, no promoted slot and
+   no ranking badge (F-8). Nothing on a card marks a record as thin, and no card
+   is styled differently for holding less. */
+
+.dir-results{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.dir-item{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  box-shadow:var(--shadow-soft);
+}
+
+/* The whole identity band is the control that opens the reel. The credential
+   chip below it is its own button, so no interactive element is nested inside
+   another. */
+.dir-open{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:44px;
+  padding:12px 14px;
+  border-radius:var(--r-card);
+  text-align:left;
+}
+
+.dir-plate{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  flex:none;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-pill);
+  background:radial-gradient(circle at 50% 42%, var(--line-strong) 0%, var(--surface) 72%);
+}
+
+/* A record that names a media plate gets one, dimmed under its own monogram, so
+   two records naming the same placeholder file are still told apart by the
+   initials rather than by the photograph. */
+.dir-plate--photo{background:var(--ink);border-color:var(--ink);}
+
+.dir-plate-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.34;
+}
+
+.dir-monogram{
+  position:relative;
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.9375rem;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+}
+
+.dir-plate--photo .dir-monogram{color:var(--paper);}
+
+.dir-lines{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.dir-name{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:1rem;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+}
+
+.dir-niche{
+  font-size:.8125rem;
+  color:var(--muted);
+  overflow-wrap:anywhere;
+}
+
+.dir-foot{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:0 14px 12px;
+}
+
+.dir-chip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+/* Why this person is on the screen — the same register as the deck's context
+   lines, so it reads as a note and never as a claim the person made. */
+.dir-why{
+  margin:0;
+  color:var(--muted);
+  font-size:.75rem;
+  overflow-wrap:anywhere;
+}
+
+/* --- The empty state ------------------------------------------------------ */
+/* It names the one filter that would bring results back and offers to drop that
+   one. It never offers to show everyone. */
+
+.dir-empty{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  max-width:46ch;
+  padding:14px 0 0;
+}
+
+.dir-empty-lead{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:1.0625rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+}
+
+.dir-empty-note{
+  margin:0;
+  color:var(--muted);
+  font-size:.875rem;
+}
+
+.dir-drop{margin-top:2px;}
+
+/* --- 520px and up --------------------------------------------------------- */
+
+@media (min-width:520px){
+  .dir-surface{padding-top:32px;}
+
+  .dir-title{font-size:2rem;}
+
+  .dir-query{max-width:34rem;}
+
+  .dir-plate{width:56px;height:56px;}
+
+  .dir-monogram{font-size:1.0625rem;}
+
+  .dir-name{font-size:1.0625rem;}
+}

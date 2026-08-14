@@ -1,0 +1,301 @@
+/* about.css — the "About this prototype" surface: what it is, how a reel is
+   made, why it looks like this.
+
+   Every value resolves through src/brand/tokens.css. No colour literal is
+   declared in this file, and no shadow that is not already a token.
+
+   The surface covers the viewport rather than the 9:19.5 stage: block 2 stands a
+   persona record BESIDE the cards it compiles into, and the phone canvas is too
+   narrow to hold the pair. Below 760px the pair stacks and the surface reads as
+   one column, which is what a phone gets anyway. */
+
+/* --- The sheet ------------------------------------------------------------- */
+/* Opaque paper over everything, including the deck's own overlay (z-index 5) and
+   the credential sheets (6). The reel behind it is replaced, never dimmed. */
+
+.about-sheet{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:9;
+  overflow-y:auto;
+  background:var(--paper);
+  padding:0 20px 40px;
+  padding-right:max(20px,env(safe-area-inset-right));
+  padding-left:max(20px,env(safe-area-inset-left));
+  padding-bottom:max(40px,env(safe-area-inset-bottom));
+}
+
+.about-panel{
+  max-width:860px;
+  margin:0 auto;
+  outline:none;
+}
+
+.about-bar{
+  position:sticky;
+  top:0;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 0 12px;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+}
+
+.about-title{
+  font-family:var(--font-ui);
+  font-size:.6875rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  color:var(--muted-soft);
+}
+
+.about-close{
+  min-height:44px;
+  min-width:44px;
+  padding:0 14px;
+  border-radius:var(--r-pill);
+  color:var(--muted);
+  font-size:.8125rem;
+  font-weight:500;
+}
+
+.about-close:hover{color:var(--ink);}
+
+/* --- Blocks ---------------------------------------------------------------- */
+
+.about-block{padding:30px 0;}
+
+.about-block + .about-block{border-top:1px solid var(--line);}
+
+.about-h{font-size:1.5rem;}
+
+.about-sub{
+  margin:26px 0 10px;
+  font-family:var(--font-ui);
+  font-size:.6875rem;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  color:var(--muted-soft);
+}
+
+.about-lede{
+  margin:12px 0 0;
+  max-width:62ch;
+  font-size:.9375rem;
+  color:var(--ink-soft);
+}
+
+.about-note{
+  margin:8px 0 0;
+  max-width:62ch;
+  font-size:.8125rem;
+  color:var(--muted);
+}
+
+.about-list{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:8px;
+  max-width:62ch;
+}
+
+.about-item{
+  position:relative;
+  padding-left:16px;
+  font-size:.875rem;
+  color:var(--ink-soft);
+}
+
+.about-item::before{
+  content:"";
+  position:absolute;
+  top:.6em;
+  left:0;
+  width:6px;
+  height:1px;
+  background:var(--muted-soft);
+}
+
+/* --- Block 2: the record beside the cards ---------------------------------- */
+
+.about-pair{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:18px;
+  align-items:start;
+}
+
+@media (min-width:760px){
+  .about-pair{grid-template-columns:1fr 1fr;gap:26px;}
+}
+
+.about-column{min-width:0;}
+
+.about-record{
+  margin:0;
+  padding:14px;
+  max-height:520px;
+  overflow:auto;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  font-size:.75rem;
+  line-height:1.55;
+  color:var(--ink-soft);
+  white-space:pre;
+}
+
+.about-card{
+  margin-top:10px;
+  padding:12px 14px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+}
+
+.about-card-head{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:9px;
+  padding-bottom:9px;
+  border-bottom:1px solid var(--line);
+}
+
+.about-card-n{font-size:.6875rem;color:var(--muted-soft);}
+
+.about-card-label{
+  font-family:var(--font-display);
+  font-size:.9375rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+}
+
+.about-card-kind{
+  margin-left:auto;
+  font-size:.6875rem;
+  color:var(--muted);
+}
+
+/* The connector rows: record field on the left, the element it becomes on the
+   right. The arrow is drawn in CSS so the text stays copyable as two facts. */
+.about-conn{
+  display:grid;
+  grid-template-columns:minmax(0,auto) minmax(0,1fr);
+  gap:5px 10px;
+  margin:10px 0 0;
+}
+
+.about-conn-from{
+  margin:0;
+  font-size:.75rem;
+  color:var(--ink);
+  overflow-wrap:anywhere;
+}
+
+.about-conn-to{
+  margin:0;
+  font-size:.75rem;
+  color:var(--muted);
+}
+
+.about-conn-to::before{
+  content:"→ ";
+  color:var(--muted-soft);
+}
+
+/* --- The unfilled video slot, shown once ----------------------------------- */
+/* Deliberately inert and deliberately empty: this is what the slot looks like
+   when nothing fills it, and it is never rendered inside a reel. */
+
+.about-slot{
+  margin-top:26px;
+  padding-top:22px;
+  border-top:1px dashed var(--line-strong);
+  max-width:62ch;
+}
+
+.about-slot-frame{
+  display:grid;
+  gap:8px;
+  margin-top:12px;
+  padding:14px;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--r-card);
+}
+
+.about-slot-plate{
+  display:block;
+  aspect-ratio:9/16;
+  max-width:150px;
+  border:1px dashed var(--line-strong);
+  border-radius:var(--r-card);
+  background:var(--surface);
+}
+
+.about-slot-row{font-size:.75rem;color:var(--muted-soft);}
+
+.about-slot .about-record{margin-top:12px;}
+
+/* --- Block 3: the rulings --------------------------------------------------- */
+
+.about-rulings{
+  margin:18px 0 0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:14px;
+  max-width:72ch;
+}
+
+.about-ruling{
+  padding-left:14px;
+  border-left:1px solid var(--line);
+}
+
+.about-ruling-head{
+  display:flex;
+  align-items:baseline;
+  gap:9px;
+  margin:0;
+}
+
+.about-ruling-id{font-size:.75rem;color:var(--muted-soft);}
+
+.about-ruling-name{
+  font-family:var(--font-display);
+  font-size:.9375rem;
+  font-weight:600;
+  letter-spacing:-0.02em;
+}
+
+.about-ruling-line{
+  margin:4px 0 0;
+  font-size:.875rem;
+  color:var(--ink-soft);
+}
+
+.about-pointer{
+  margin:4px 0 0;
+  font-size:.75rem;
+  color:var(--muted);
+}
+
+/* The legend arrives from src/credentials/legend.js and carries its own styles;
+   this rule only gives it the same air as a block of its own. */
+.about-block .cred-legend{
+  margin-top:30px;
+  padding-top:22px;
+  border-top:1px solid var(--line);
+}
